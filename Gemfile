@@ -26,7 +26,7 @@ gem 'puma', '~> 3.7'
 gem 'rack-cors'
 
 gem 'figaro'
-gem 'jwt'
+gem 'knock'
 gem 'activeresource', github: 'rails/activeresource', branch: 'master', require: 'active_resource'
 
 group :development, :test do
