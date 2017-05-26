@@ -27,6 +27,7 @@ gem 'rack-cors'
 
 gem 'figaro'
 gem 'jwt'
+gem 'activeresource', github: 'rails/activeresource', branch: 'master', require: 'active_resource'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -43,10 +44,10 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.0'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'faker'
   gem 'database_cleaner'
-  gem 'foobar'
+  gem 'fuubar'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
