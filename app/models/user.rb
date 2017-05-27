@@ -2,29 +2,18 @@ class User < ActiveResource::Base
   self.site = ENV["volgaspot_api"]
   self.include_format_in_path = false
 
+  class_attribute :auth_service
+  self.auth_service = VolgaspotApiService
+
   def self.from_token_request(request)
-    email = request.params["auth"] && request.params["auth"]["email"]
-    self.new email: email
+    login = request.params["auth"] && request.params["auth"]["login"]
+    self.new login: login
   end
 
   def authenticate(password)
-    self.password = password
-    response = parse_response send_custom_request(request_type: :post, element: 'customer-session', action: :login)
-    return false unless response[:success]
-    load response[:data]
+    user_data = self.class.auth_service.login(login: login, password: password)
+    return false unless user_data
+    load user_data
     self
-  end
-
-  private
-
-  def send_custom_request(request_type:, action:, element: self.class.name.downcase)
-    self.class.element_name = element
-    response = self.class.send(request_type, action)
-    self.class.element_name = "user"
-    response
-  end
-
-  def parse_response(response)
-    JSON.parse(response.body).with_indifferent_access
   end
 end
