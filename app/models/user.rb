@@ -1,5 +1,6 @@
 class User < ActiveResource::Base
   self.site = ENV["volgaspot_api"]
+  self.include_format_in_path = false
 
   def self.from_token_request(request)
     email = request.params["auth"] && request.params["auth"]["email"]
