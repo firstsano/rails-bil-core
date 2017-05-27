@@ -1,6 +1,11 @@
 class User < ActiveResource::Base
   self.site = ENV["volgaspot_api"]
 
+  def self.from_token_request(request)
+    email = request.params["auth"] && request.params["auth"]["email"]
+    self.new email: email
+  end
+
   def authenticate(password)
     self.password = password
     response = parse_response self.class.post(:login)
