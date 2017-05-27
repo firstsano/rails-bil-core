@@ -20,7 +20,7 @@ RSpec.describe "User", type: :model do
 
         def mock_response(output = {})
           ActiveResource::HttpMock.respond_to do |mock|
-            mock.post target_url("/users/login.json"), json_headers, output.to_json
+            mock.post target_url("/customer-sessions/login.json"), json_headers, output.to_json
           end
         end
 
