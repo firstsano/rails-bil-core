@@ -27,6 +27,7 @@ gem 'rack-cors'
 
 gem 'figaro'
 gem 'knock'
+gem 'httparty'
 gem 'activeresource', github: 'rails/activeresource', branch: 'master', require: 'active_resource'
 
 group :development, :test do
