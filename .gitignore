@@ -7,6 +7,10 @@
 # Ignore frameworks files
 /.idea
 
+# Ignore rvm settings files
+/.ruby-gemset
+/.ruby-version
+
 # Ignore bundler config.
 /.bundle
 
