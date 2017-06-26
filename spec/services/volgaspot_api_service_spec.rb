@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'webmock/rspec'
 
 RSpec.describe "VolgaspotApiService", type: :module do
   subject { VolgaspotApiService }
