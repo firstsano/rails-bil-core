@@ -1,7 +1,5 @@
 RSpec.describe "routes for authentification", type: :routing do
-  def namespaced(url)
-    "api/v1#{url}"
-  end
+  let(:current_namespace) { "api/v1" }
 
   describe "signing in" do
     it "should be routable" do
