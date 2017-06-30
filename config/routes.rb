@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  resources :users do
-    collection do
-      post 'sign-in' => 'user_token#create'
+  namespace :api do
+    namespace :v1 do
+      post '/users/sign-in' => 'user_token#create'
+      get '/account/discounts'
     end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
