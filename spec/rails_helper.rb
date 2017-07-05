@@ -78,7 +78,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   # Mix in additional helpers
-  # config.include Routes::NamespaceHelpers, type: :routing
+  config.include Requests::JsonHelpers, type: :request
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
