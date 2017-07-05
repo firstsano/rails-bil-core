@@ -10,7 +10,7 @@ RSpec.describe Api::V1::AccountController, type: :request do
 
     context "when user is not authorized" do
       it "should return not_authorized header" do
-        expect(response).to have_http_status(:not_authorized)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
 
