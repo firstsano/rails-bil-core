@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Api::V1::AccountController, type: :request do
   let(:namespace) { "api/v1" }
   let(:headers) { { "HTTP_ACCEPT" => "application/json" } }
