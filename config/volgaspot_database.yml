@@ -1,0 +1,25 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: postgres
+  password: ''
+  database: UTM5
+
+development:
+  <<: *default
+  host: 172.18.200.12
+
+production:
+  <<: *default
+  host: 172.18.200.11
+
+test:
+  # adapter: postgresql
+  # database: rcore_test
+  # encoding: unicode
+  # pool: 5
+  # username: rcore
+  # password: nein4qua
+  <<: *default
+  host: 172.18.200.12
