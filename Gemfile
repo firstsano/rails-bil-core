@@ -45,6 +45,7 @@ end
 group :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'rspec-its'
   gem 'faker'
   gem 'webmock'
   gem 'database_cleaner'
