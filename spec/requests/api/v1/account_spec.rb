@@ -14,12 +14,17 @@ RSpec.describe Api::V1::AccountController, type: :request do
       end
     end
 
-    it "should return ok header on success" do
-      expect(response).to have_http_status(:ok)
-    end
+    context "when user is authorized" do
+      sign_in
+      before { get "/api/v1/account/discounts", headers: headers.merge(auth_headers) }
 
-    it "should return corresponding data in response" do
-      expect(json).not_to be_empty
+      it "should return ok header on success" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "should return corresponding data in response" do
+        expect(json).not_to be_empty
+      end
     end
   end
 end
