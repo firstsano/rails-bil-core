@@ -78,6 +78,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   # Mix in additional helpers
+  config.extend Authentication
   config.include Requests::JsonHelpers, type: :request
 
   # Filter lines from Rails gems in backtraces.
