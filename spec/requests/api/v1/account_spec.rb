@@ -16,7 +16,10 @@ RSpec.describe Api::V1::AccountController, type: :request do
 
     context "when user is authorized" do
       sign_in
-      before { get "/api/v1/account/discounts", headers: headers.merge(auth_headers) }
+      before do
+        10.times { create :discount, account_id: @user.account_id }
+        get "/api/v1/account/discounts", headers: headers.merge(auth_headers)
+      end
 
       it "should return ok header on success" do
         expect(response).to have_http_status(:ok)
