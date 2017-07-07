@@ -15,11 +15,9 @@ production:
   host: 172.18.200.11
 
 test:
-  # adapter: postgresql
-  # database: rcore_test
-  # encoding: unicode
-  # pool: 5
-  # username: rcore
-  # password: nein4qua
-  <<: *default
-  host: 172.18.200.12
+  adapter: postgresql
+  database: rcore_test_utm
+  encoding: unicode
+  pool: 5
+  username: rcore
+  password: nein4qua
