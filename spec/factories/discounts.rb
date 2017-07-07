@@ -9,7 +9,7 @@ FactoryGirl.define do
     service_type { Faker::Number.between(1, 20) }
     discount_period_id { Faker::Number.between(1, 20) }
     slink_id { Faker::Number.between(1, 20) }
-    discount_date { Faker::Time.to_i }
+    discount_date { DateTime.now.to_i }
     charge_type { Faker::Number.between(1, 20) }
   end
 end
