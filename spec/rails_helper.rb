@@ -80,6 +80,7 @@ RSpec.configure do |config|
   # Mix in additional helpers
   config.extend Authentication
   config.include Requests::JsonHelpers, type: :request
+  config.include Requests::HeadersHelpers, type: :request
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
