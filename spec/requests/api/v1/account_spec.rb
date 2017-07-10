@@ -17,16 +17,15 @@ RSpec.describe Api::V1::AccountController, type: :request do
     context "when user is authorized" do
       sign_in
       before do
-        10.times { create :discount, account_id: @user.account_id }
+        5.times { create :discount, account_id: @user.account_id }
+        5.times { create :discount }
         get "/api/v1/account/discounts", headers: headers.merge(auth_headers)
       end
 
-      it "should return ok header on success" do
+      it "should return corresponding data in response", aggregate_failures: true do
         expect(response).to have_http_status(:ok)
-      end
-
-      it "should return corresponding data in response" do
         expect(json).not_to be_empty
+        expect(json).to have(5).items
       end
     end
   end
