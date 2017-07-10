@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe V1::AccountController, type: :request do
-  let(:headers) { { "HTTP_ACCEPT" => "application/json" } }
-
   describe "GET discounts" do
     let(:route) { "/account/discounts" }
-    before { get "/account/discounts" }
+    before { get route }
 
     context "when user is not authorized" do
       it "should return not_authorized header" do
@@ -18,7 +16,7 @@ RSpec.describe V1::AccountController, type: :request do
       before do
         5.times { create :discount, account_id: @user.account_id }
         5.times { create :discount }
-        get "/account/discounts", headers: headers.merge(auth_headers)
+        get route, headers: json_headers.merge(auth_headers)
       end
 
       it "should return corresponding data in response", aggregate_failures: true do
