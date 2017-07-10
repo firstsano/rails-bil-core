@@ -99,6 +99,10 @@ GEM
     httparty (0.15.5)
       multi_xml (>= 0.5.2)
     i18n (0.8.1)
+    json-schema (2.8.0)
+      addressable (>= 2.4)
+    json_matchers (0.7.0)
+      json-schema (~> 2.7)
     jsonapi-renderer (0.1.2)
     jwt (1.5.6)
     knock (2.1.1)
@@ -219,6 +223,7 @@ DEPENDENCIES
   figaro
   fuubar
   httparty
+  json_matchers
   knock
   listen (>= 3.0.5, < 3.2)
   pg
