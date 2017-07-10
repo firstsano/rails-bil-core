@@ -21,8 +21,7 @@ RSpec.describe V1::AccountController, type: :request do
 
       it "should return corresponding data in response", aggregate_failures: true do
         expect(response).to have_http_status(:ok)
-        expect(json).not_to be_empty
-        expect(json["data"]).to have(5).items
+        expect(response).to match_response_schema("discounts")
       end
     end
   end
