@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :service do
     service_type { Faker::Number.between(1, 10) }
     service_name { Faker::Lorem.sentence }
-    comment { Faker::Lorem.paragraph }
+    comment { Faker::Lorem.sentence }
 
     after(:build) do |discount|
       class << discount
