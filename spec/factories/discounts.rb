@@ -11,6 +11,7 @@ FactoryGirl.define do
     slink_id { Faker::Number.between(1, 20) }
     discount_date { DateTime.now.to_i }
     charge_type { Faker::Number.between(1, 20) }
+    service
 
     after(:build) do |discount|
       class << discount
