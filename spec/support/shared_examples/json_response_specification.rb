@@ -1,10 +1,10 @@
-RSpec.shared_examples 'basic json API response' do |
-  should_have_items: false,
-  required_attributes: false
-|
-
+RSpec.shared_context "json API response context" do
   let(:string_response) { response.body }
   let(:hash_response) { json_response["data"] }
+end
+
+RSpec.shared_examples 'basic json API response' do |should_have_items: false, required_attributes: false|
+  include_context "json API response context"
 
   it "should return corresponding data in response" do
     expect(response).to have_http_status(:ok)
@@ -41,8 +41,7 @@ RSpec.shared_examples 'basic json API response' do |
 end
 
 RSpec.shared_examples 'json API response with relationships' do |with_relationships|
-  let(:string_response) { response.body }
-  let(:hash_response) { json_response["data"] }
+  include_context "json API response context"
 
   it "should have resources with relationships attribute set" do
     hash_response.each do |resource|
@@ -57,11 +56,16 @@ RSpec.shared_examples 'json API response with relationships' do |with_relationsh
   end
 end
 
-RSpec.shared_examples 'json API response with included' do
-  let(:string_response) { response.body }
-  let(:hash_response) { json_response["data"] }
+RSpec.shared_examples 'json API response with included' do |required_inclusion_type|
+  include_context "json API response context"
+  let(:hash_response) { json_response["included"] }
 
   it "should have 'included' attribute in route path" do
     expect(string_response).to have_json_path "included"
+  end
+
+  it "should have required_inclusion_type" do
+    included_types = hash_response.map { |included_resource| included_resource["type"] }
+    expect(included_types.uniq).to include required_inclusion_type
   end
 end
