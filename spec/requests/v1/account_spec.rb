@@ -21,8 +21,10 @@ RSpec.describe V1::AccountController, type: :request do
 
       it "should return corresponding data in response", aggregate_failures: true do
         expect(response).to have_http_status(:ok)
-        expect(response).to match_response_schema("discounts")
       end
+
+      it_behaves_like 'json API response', should_have_items: 5,
+        required_attributes: ["incoming-rest", "outgoing-rest", "discount", "discount-with-tax", "discount-date"]
     end
   end
 end
