@@ -24,7 +24,8 @@ RSpec.describe V1::AccountController, type: :request do
       end
 
       it_behaves_like 'json API response', should_have_items: 5,
-        required_attributes: ["incoming-rest", "outgoing-rest", "discount", "discount-with-tax", "discount-date"]
+        required_attributes: ["incoming-rest", "outgoing-rest", "discount", "discount-with-tax", "discount-date"],
+        with_relationships: "service"
     end
   end
 end

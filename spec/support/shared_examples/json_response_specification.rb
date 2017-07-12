@@ -26,6 +26,12 @@ RSpec.shared_examples 'json API response' do |
         expect(resource.to_json).to have_json_path "relationships"
       end
     end
+
+    it "should have proper relationship resource type" do
+      hash_response.each do |resource|
+        expect(resource["relationships"].to_json).to have_json_path with_relationships
+      end
+    end
   end
 
   if should_have_items
