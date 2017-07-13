@@ -4,11 +4,18 @@ class V1::BaseController < ActionController::API
   before_action :authenticate_user
 
   def render(resource)
-    super json: resource, include: inclusion_filter
+    super json: resource, include: inclusion_options
   end
 
-  def inclusion_filter
+  private
+
+  def inclusion_options
     return [] unless params[:include]
     params[:include].split(/[,\.]/).uniq
+  end
+
+  def filter_params(*attributes)
+    return attributes.count.times.map { nil } unless params[:filter]
+    params[:filter].values_at *attributes
   end
 end
