@@ -1,6 +1,6 @@
 RSpec.shared_context "json API response context" do
   let(:string_response) { response.body }
-  let(:hash_response) { json_response["data"] }
+  let(:hash_response) { json_body["data"] }
 end
 
 RSpec.shared_examples 'basic json API response' do |should_have_items: false, required_attributes: false|
@@ -58,7 +58,7 @@ end
 
 RSpec.shared_examples 'json API response with included' do |required_inclusion_type|
   include_context "json API response context"
-  let(:hash_response) { json_response["included"] }
+  let(:hash_response) { json_body["included"] }
 
   it "should have 'included' attribute in route path" do
     expect(string_response).to have_json_path "included"
