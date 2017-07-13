@@ -43,15 +43,14 @@ RSpec.configure do |config|
 
   # start by truncating all the tables but then use the faster transaction strategy the rest of the time.
   config.before(:suite) do
+    ActiveRecord::Base.establish_connection VOLGASPOT_DB
     DatabaseCleaner.clean_with(:truncation)
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :deletion
   end
 
-  # start the transaction strategy as examples are run
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
+  config.after(:suite) do
+    ActiveRecord::Base.establish_connection VOLGASPOT_DB
+    DatabaseCleaner.clean_with(:truncation)
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -79,6 +78,7 @@ RSpec.configure do |config|
 
   # Mix in additional helpers
   config.extend Authentication
+  config.extend DatabaseCleanHelpers
   config.include Requests::JsonHelpers, type: :request
   config.include Requests::HeadersHelpers, type: :request
 
