@@ -12,4 +12,11 @@ module VolgaspotApiService
     return false unless response[:success]
     response[:data]
   end
+
+  def self.fetch_resource(resource_name:, resource_id:)
+    raw_response = get "/#{resource_name.to_s.pluralize}/#{resource_id}"
+    response = raw_response.parsed_response.with_indifferent_access
+    return false unless response[:success]
+    response[:data]
+  end
 end
