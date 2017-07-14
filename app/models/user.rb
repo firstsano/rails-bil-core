@@ -1,14 +1,9 @@
-class User < ActiveResource::Base
-  self.site = ENV["volgaspot_api"]
-  self.include_format_in_path = false
-
+class User
   class_attribute :auth_service
   self.auth_service = VolgaspotApiService
 
-  schema do
-    string 'login', 'full_name', 'actual_address', 'status', 'mobile_phone', 'email'
-    integer 'account_id'
-  end
+  attr_accessor :id, :login, :full_name, :actual_address, :status,
+    :mobile_phone, :email, :account_id
 
   def self.from_token_request(request)
     login = request.params["auth"] && request.params["auth"]["login"]
@@ -20,5 +15,14 @@ class User < ActiveResource::Base
     return false unless user_data
     load user_data
     self
+  end
+
+  def self.find(user_id)
+    user_attributes = auth_service.fetch_resource resource_name: :user, resource_id: user_id
+    user = self.new
+    user_attributes.each do |attribute, value|
+      user.send "#{attribute}=", value
+    end
+    user
   end
 end
