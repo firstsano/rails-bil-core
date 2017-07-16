@@ -1,37 +1,88 @@
 require 'rails_helper'
 
-RSpec.describe "User", type: :model do
-  describe "using ActiveResource as user model" do
-    it "should inherit from ActiveResource class" do
-      expect(User).to be <  ActiveResource::Base
+RSpec.describe User, type: :model do
+  before { User.remote_data_service = double("RemoteDataService") }
+
+  let(:data_service) { User.remote_data_service }
+  let(:user_response) { attributes_for :user }
+
+  def mock_service(method:, output: {})
+    allow(data_service).to receive(method).and_return(output)
+  end
+
+  describe "instance methods" do
+    context "#authenticate" do
+      let(:user) { User.new }
+      let(:password) { Faker::Lorem.word }
+
+      it "should respond to a method with password param" do
+        expect(user).to respond_to(:authenticate).with(1).arguments
+      end
+
+      it "should call 'login' method of remote_data_service" do
+        mock_service method: :login, output: {}
+        expect(data_service).to receive(:login).with(hash_including(password: password))
+        user.authenticate password
+      end
+
+      it "should return user with set attributes if login is succeds", aggregate_failures: true do
+        mock_service method: :login, output: user_response
+        authenticated_user = user.authenticate password
+        user_response.each { |attribute, value| expect(authenticated_user.send(attribute)).to eq value }
+      end
+
+      it "should return false if login fails" do
+        mock_service method: :login, output: false
+        expect(user.authenticate(password)).to be false
+      end
+    end
+  end
+
+  describe "class methods" do
+    subject { User }
+
+    context "::find" do
+      it { is_expected.to respond_to(:find).with(1).arguments }
+
+      it "should call 'fetch_resource' method of remote_data_service" do
+        mock_service method: :fetch_resource, output: user_response
+        expect(data_service).to receive(:fetch_resource).with(hash_including(resource_id: 1))
+        User.find 1
+      end
+
+      context "when 'fetch_resource' succeds" do
+        it "creates user instance and assigns attributes to it", aggregate_failures: true do
+          mock_service method: :fetch_resource, output: user_response
+          found_user = User.find 1
+          user_response.each { |attribute, value| expect(found_user.send(attribute)).to eq value }
+        end
+      end
+
+      context "when 'fetch_resource' fails" do
+        it "raises error" do
+          mock_service method: :fetch_resource, output: false
+          expect { User.find(1) }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
     end
 
-    describe "instance methods" do
-      context "#authenticate" do
-        let(:user_attributes) { {name: "John Doe", login: "riky"} }
-        let(:db_user_attributes) { user_attributes.merge({id: 1}) }
-        let(:user_password) { "test_password" }
-        let(:current_user) { User.new(user_attributes) }
+    context "::from_token_request" do
+      let(:login) { Faker::Lorem.word }
 
-        def mock_service(output: {})
-          allow(VolgaspotApiService).to receive(:login).and_return(output)
-        end
+      def request(request_params = {})
+        Struct.new(:params).new(request_params)
+      end
 
-        it "should respond to a method with password param" do
-          expect(current_user).to respond_to(:authenticate).with(1).arguments
-        end
+      it { is_expected.to respond_to(:from_token_request).with(1).arguments }
 
-        it "should return user if remote server has one with valid credentials" do
-          mock_service output: db_user_attributes
-          authenticated_user = current_user.authenticate(user_password)
-          expect(authenticated_user).to be_truthy
-          expect(authenticated_user.id).to eq(1)
-        end
+      it "raises error when login is not provided with the request" do
+        expect { User.from_token_request(request) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
 
-        it "should return false if no user found on remote server with given credentials" do
-          mock_service output: false
-          expect(current_user.authenticate(user_password)).to be false
-        end
+      it "creates new user instance with login from request params", aggregate_failures: true do
+        user = User.from_token_request request({ "auth" => { "login" => login } })
+        expect(user).to be_an_instance_of User
+        expect(user.login).to eq login
       end
     end
   end
