@@ -8,7 +8,7 @@ FactoryGirl.define do
     initialize_with { attributes }
   end
 
-  factory :user, class: OpenStruct do
+  factory :user, class: User do
     id { Faker::Number.number(4) }
     login { Faker::Lorem.characters(2) + Faker::Number.number(4) }
     full_name { Faker::Name.name_with_middle }
