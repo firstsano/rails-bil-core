@@ -1,28 +1,34 @@
 class User
-  class_attribute :auth_service
-  self.auth_service = VolgaspotApiService
+  include ActiveModel::Model
+
+  class_attribute :remote_data_service
+  self.remote_data_service = VolgaspotApiService
 
   attr_accessor :id, :login, :full_name, :actual_address, :status,
     :mobile_phone, :email, :account_id
 
   def self.from_token_request(request)
     login = request.params["auth"] && request.params["auth"]["login"]
+    raise_user_not_found unless login
     self.new login: login
   end
 
   def authenticate(password)
-    user_data = self.class.auth_service.login(login: login, password: password)
+    user_data = self.class.remote_data_service.login(login: login, password: password)
     return false unless user_data
-    load user_data
+    self.assign_attributes user_data
     self
   end
 
   def self.find(user_id)
-    user_attributes = auth_service.fetch_resource resource_name: :user, resource_id: user_id
-    user = self.new
-    user_attributes.each do |attribute, value|
-      user.send "#{attribute}=", value
-    end
-    user
+    user_attributes = remote_data_service.fetch_resource resource_name: :user, resource_id: user_id
+    raise_user_not_found unless user_attributes
+    self.new user_attributes
+  end
+
+  private
+
+  def self.raise_user_not_found
+    raise ActiveRecord::RecordNotFound
   end
 end
