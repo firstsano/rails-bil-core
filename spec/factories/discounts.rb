@@ -13,10 +13,6 @@ FactoryGirl.define do
     charge_type { Faker::Number.between(1, 20) }
     service
 
-    trait :yesterday do
-      discount_date { (DateTime.now - 1.day).to_i }
-    end
-
     after(:build) do |discount|
       class << discount
         def readonly?
