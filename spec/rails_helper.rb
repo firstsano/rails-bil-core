@@ -32,6 +32,10 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+# skip extra hash keys and array values
+JsonExpressions::Matcher.assume_strict_hashes = false
+JsonExpressions::Matcher.assume_strict_arrays = false
+
 # configure shoulda matchers to use rspec as the test framework and full matcher libraries for rails
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -84,6 +88,7 @@ RSpec.configure do |config|
   config.extend DatabaseCleanHelpers
   config.include Requests::JsonHelpers, type: :request
   config.include Requests::HeadersHelpers, type: :request
+  config.include JsonExpressions, type: :request
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
