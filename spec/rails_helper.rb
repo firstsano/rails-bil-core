@@ -36,6 +36,9 @@ ActiveRecord::Migration.maintain_test_schema!
 JsonExpressions::Matcher.assume_strict_hashes = false
 JsonExpressions::Matcher.assume_strict_arrays = false
 
+# set faker's locale
+Faker::Config.locale = 'en-US'
+
 # configure shoulda matchers to use rspec as the test framework and full matcher libraries for rails
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

@@ -44,23 +44,23 @@ RSpec.describe User, type: :model do
     context "::find" do
       it { is_expected.to respond_to(:find).with(1).arguments }
 
-      it "should call 'fetch_resource' method of remote_data_service" do
-        mock_service method: :fetch_resource, output: user_response
-        expect(data_service).to receive(:fetch_resource).with(hash_including(resource_id: 1))
+      it "should call 'fetch_user_data' method of remote_data_service" do
+        mock_service method: :fetch_user_data, output: user_response
+        expect(data_service).to receive(:fetch_user_data).with(1)
         User.find 1
       end
 
-      context "when 'fetch_resource' succeds" do
+      context "when 'fetch_user_data' succeds" do
         it "creates user instance and assigns attributes to it", aggregate_failures: true do
-          mock_service method: :fetch_resource, output: user_response
+          mock_service method: :fetch_user_data, output: user_response
           found_user = User.find 1
           user_response.each { |attribute, value| expect(found_user.send(attribute)).to eq value }
         end
       end
 
-      context "when 'fetch_resource' fails" do
+      context "when 'fetch_user_data' fails" do
         it "raises error" do
-          mock_service method: :fetch_resource, output: false
+          mock_service method: :fetch_user_data, output: false
           expect { User.find(1) }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end

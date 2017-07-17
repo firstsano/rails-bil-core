@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe V1::BaseController, type: :request do
+  before { User.remote_data_service = VolgaspotApiService }
+
   describe "authorization" do
     setup_auth
     let(:route) { "/account/discounts" }
