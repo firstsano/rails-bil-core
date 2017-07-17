@@ -3,7 +3,7 @@ class Discount < VolgaspotRecord
 
   belongs_to :service
 
-  scope :by_user_account, -> user { where(account_id: user.account_id) }
+  scope :by_user_account, -> user { where(account_id: user.utm_account) }
 
   def self.date_interval(from: nil, to: nil)
     scoped = self

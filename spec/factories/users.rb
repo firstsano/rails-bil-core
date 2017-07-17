@@ -1,13 +1,4 @@
-Faker::Config.locale = 'en-US'
-
 FactoryGirl.define do
-  factory :user_auth, class: Hash do
-    sequence(:login) { |i| Faker::Lorem.word + "_#{i}" }
-    password { Faker::Lorem.word }
-
-    initialize_with { attributes }
-  end
-
   factory :user, class: User do
     id { Faker::Number.number(4) }
     login { Faker::Lorem.characters(2) + Faker::Number.number(4) }
@@ -16,6 +7,7 @@ FactoryGirl.define do
     mobile_phone { Faker::PhoneNumber.phone_number }
     email { Faker::Internet.email }
     status { "" }
-    account_id { Faker::Number.number(6) }
+    vist_account { Faker::Number.number(6) }
+    utm_account { Faker::Number.number(6) }
   end
 end
