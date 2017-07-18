@@ -2,7 +2,10 @@ class V1::AccountController < V1::BaseController
   before_action :get_date_interval
 
   def discounts
-    @discounts = Discount.date_interval(from: @from, to: @to).by_user_account current_user
+    @discounts = Discount
+      .includes(:service)
+      .date_interval(from: @from, to: @to)
+      .by_user_account current_user
     render @discounts
   end
 
