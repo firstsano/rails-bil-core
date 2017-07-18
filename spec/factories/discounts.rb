@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :discount do
+  factory :discount, class: Discount do
     account_id { Faker::Number.number(6) }
     incoming_rest { Faker::Number.decimal(2) }
     outgoing_rest { Faker::Number.decimal(2) }
