@@ -5,13 +5,14 @@ default: &default
   username: rcore
   password: nein4qua
 
-development:
+production:
   <<: *default
   database: rcore
+
+development:
+  <<: *default
+  database: rcore_development
 
 test:
   <<: *default
   database: rcore_test
-
-# production:
-#   <<: *default
