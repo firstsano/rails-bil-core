@@ -1,6 +1,6 @@
 set :stage, :production
 set :rails_env, :production
-set :domain, "172.18.200.199"
+set :domain, "rcore.vgg.ru"
 
 role :web, fetch(:domain)
 role :app, fetch(:domain)
