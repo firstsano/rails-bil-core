@@ -20,4 +20,5 @@ set :ssh_options, {
 
 set :passenger_restart_with_touch, true
 
+append :linked_files, "config/application.yml"
 append :linked_dirs, "log", "tmp"
