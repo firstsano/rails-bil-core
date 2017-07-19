@@ -4,6 +4,9 @@ require "capistrano/setup"
 # Include default deployment tasks
 require "capistrano/deploy"
 
+# Create uncreated linked files during first deploy
+require 'capistrano/touch-linked-files'
+
 # Load the SCM plugin appropriate to your project:
 #
 # require "capistrano/scm/hg"

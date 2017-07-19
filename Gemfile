@@ -45,6 +45,7 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
+  gem 'capistrano-touch-linked-files'
 
   # Remove the following if your app does not use Rails
   gem 'capistrano-rails'
