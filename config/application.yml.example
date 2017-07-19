@@ -1,0 +1,9 @@
+Should contain next required settings
+   - volgaspot_api
+
+
+Example of format:
+===========================================
+production:
+  volgaspot_api: http://production/api
+===========================================
