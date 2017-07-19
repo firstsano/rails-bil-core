@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe "routes for authentification", type: :routing do
   describe "signing in" do
     let(:path) { "/users/sign-in" }
