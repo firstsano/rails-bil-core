@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe "routes user data", type: :routing do
   describe "user detalization" do
     let(:path) { "/account/discounts" }
