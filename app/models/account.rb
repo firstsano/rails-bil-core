@@ -5,6 +5,8 @@ class Account
 
   attr_accessor :id, :balance, :credit, :int_status, :is_blocked
 
+  alias_attribute :internet_status, :int_status
+
   private
 
   def whitelist_params
