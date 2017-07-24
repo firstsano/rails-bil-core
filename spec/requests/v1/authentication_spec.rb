@@ -5,7 +5,7 @@ RSpec.describe V1::BaseController, type: :request do
 
   describe "authorization" do
     setup_auth
-    let(:route) { "/account/discounts" }
+    let(:route) { "/discounts/index" }
 
     context "when user is not authorized" do
       it "should return not_authorized status" do
