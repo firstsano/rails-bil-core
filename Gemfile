@@ -29,6 +29,7 @@ gem 'httparty'
 gem 'activeresource', github: 'rails/activeresource', branch: 'master', require: 'active_resource'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'baby_squeel'
+gem 'safe_attributes', require: 'safe_attributes/base'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
