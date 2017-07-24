@@ -46,16 +46,8 @@ RSpec.describe User, type: :model do
 
       it "should call 'fetch_user_data' method of remote_data_service" do
         mock_service method: :fetch_user_data, output: user_response
-        expect(data_service).to receive(:fetch_user_data).with(1)
+        expect(data_service).to receive(:fetch_user_data).with(1, instance_of(User))
         User.find 1
-      end
-
-      context "when 'fetch_user_data' succeds" do
-        it "creates user instance and assigns attributes to it", aggregate_failures: true do
-          mock_service method: :fetch_user_data, output: user_response
-          found_user = User.find 1
-          user_response.each { |attribute, value| expect(found_user.send(attribute)).to eq value }
-        end
       end
 
       context "when 'fetch_user_data' fails" do
