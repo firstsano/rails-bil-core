@@ -1,16 +1,13 @@
 class User
   include ActiveModel::Model
+  include ActiveModel::Serialization
+  include WhitelistAttributes
 
   class_attribute :remote_data_service
   self.remote_data_service = VolgaspotApiService
 
   attr_accessor :id, :login, :full_name, :actual_address, :status,
     :mobile_phone, :email, :vist_account, :utm_account
-
-  def set_attributes(attributes)
-    assign_attributes attributes.slice(*whitelist_params)
-    self
-  end
 
   def self.from_token_request(request)
     login = request.params["auth"] && request.params["auth"]["login"]
@@ -25,9 +22,9 @@ class User
   end
 
   def self.find(user_id)
-    user_attributes = remote_data_service.fetch_user_data user_id
-    raise_user_not_found unless user_attributes
-    self.new.set_attributes user_attributes
+    user = User.new(utm_account: Account.new)
+    raise_user_not_found unless remote_data_service.fetch_user_data(user_id, user)
+    user
   end
 
   private
@@ -38,6 +35,6 @@ class User
 
   def whitelist_params
     [:id, :login, :full_name, :actual_address, :status,
-      :mobile_phone, :email, :vist_account, :utm_account]
+      :mobile_phone, :email, :vist_account]
   end
 end

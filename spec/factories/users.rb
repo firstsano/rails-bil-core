@@ -8,6 +8,5 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     status { "" }
     vist_account { Faker::Number.number(6) }
-    utm_account { Faker::Number.number(6) }
   end
 end
