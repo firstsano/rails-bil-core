@@ -5,7 +5,7 @@ class V1::DiscountsController < V1::BaseController
     @discounts = Discount
       .includes(:service)
       .date_interval(from: @from, to: @to)
-      .by_user_account current_user
+      .by_user_account current_user.utm_account
     render @discounts
   end
 
