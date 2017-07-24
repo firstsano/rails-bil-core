@@ -13,12 +13,13 @@ module VolgaspotApiService
     response[:data]
   end
 
-  def self.fetch_user_data(id)
+  def self.fetch_user_data(id, user)
     response = send_request get(ROUTES[:user_data] + id.to_s, query: { expand: :account })
     return false unless response[:success]
     response[:data][:vist_account] = response[:data][:account_id]
-    response[:data][:utm_account] = response[:data][:account][:id]
-    response[:data]
+    user.set_attributes response[:data]
+    user.utm_account.set_attributes response[:data][:account]
+    user
   end
 
   private
