@@ -11,7 +11,10 @@ class V1::BaseController < ActionController::API
 
   def inclusion_options
     return [] unless params[:include]
-    params[:include].split(/[,\.]/).uniq
+    params[:include]
+      .split(/[,\.]/)
+      .uniq
+      .map(&:underscore)
   end
 
   def filter_params(*attributes)
