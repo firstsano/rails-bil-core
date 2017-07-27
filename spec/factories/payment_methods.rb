@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :payment_method, class: PaymentMethod do
-    name { Faker::Lorem.word }
+    name { |i| Faker::Lorem.word + i.to_s }
 
     after(:build) do |payment_method|
       class << payment_method
