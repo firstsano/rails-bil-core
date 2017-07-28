@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     get '/discounts/index'
     get '/payments/index'
     get '/users/show'
+    get '/services/index'
   end
 end
