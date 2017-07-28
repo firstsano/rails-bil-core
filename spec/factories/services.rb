@@ -4,6 +4,10 @@ FactoryGirl.define do
     service_name { Faker::Lorem.sentence }
     comment { Faker::Lorem.sentence }
 
+    trait :with_parent do
+      association :parent, factory: :service
+    end
+
     after(:build) do |discount|
       class << discount
         def readonly?
