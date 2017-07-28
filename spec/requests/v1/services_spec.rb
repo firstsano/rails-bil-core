@@ -12,6 +12,8 @@ RSpec.describe V1::ServicesController, type: :request do
 
     before { get route, headers: auth_headers }
 
-    it_behaves_like 'basic json API response'
+    it_behaves_like 'basic json API response',
+      should_have_items: 5,
+      required_attributes: ["name", "service-type", "description", "cost-month", "cost-day"]
   end
 end
