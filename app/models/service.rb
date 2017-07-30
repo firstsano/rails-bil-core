@@ -1,16 +1,11 @@
-class Service < VolgaspotRecord
-  self.table_name = "services_data"
+class Service
+  attr_reader :id
 
-  alias_attribute :name, :service_name
-  belongs_to :parent, foreign_key: :parent_service_id, class_name: 'Service', required: false
-
-  attr_accessor :cost_month
-
-  def cost_day
-    cost_month ? cost_month / 30 : 0
+  def initialize(id)
+    @id = id
   end
 
-  def service_type_name
-    parent.service_name if parent
+  def service_data
+    @service_data ||= ServiceData.find id
   end
 end
