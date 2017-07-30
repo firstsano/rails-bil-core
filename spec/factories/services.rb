@@ -1,19 +1,13 @@
 FactoryGirl.define do
   factory :service, class: Service do
-    service_type { Faker::Number.between(1, 10) }
-    service_name { Faker::Lorem.sentence }
-    comment { Faker::Lorem.sentence }
+    sequence(:id) { |i| i }
 
-    trait :with_parent do
-      association :parent, factory: :service
-    end
-
-    after(:build) do |discount|
-      class << discount
-        def readonly?
-          false
-        end
+    trait :with_service_data do
+      after(:build) do |service|
+        create :service_data, id: service.id
       end
     end
+
+    initialize_with { new(id) }
   end
 end
