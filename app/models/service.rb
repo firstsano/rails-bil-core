@@ -15,6 +15,11 @@ class Service
     @service_data ||= ServiceData.find id
   end
 
+  def cost_day
+    days_in_month = Time.days_in_month(Date.current.month)
+    cost_month ? cost_month.to_f / days_in_month : nil
+  end
+
   private
 
   def whitelist_params
