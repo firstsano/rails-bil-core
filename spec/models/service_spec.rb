@@ -2,9 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Service, type: :model do
   clean_before(:all)
-  subject { build :service, :with_service_data }
-  it { is_expected.to respond_to(:service_data) }
-  its(:service_data) { is_expected.to be_an_instance_of(ServiceData) }
+
+  describe "service methods" do
+    context "::service_data" do
+      subject { build :service, :with_service_data }
+      it { is_expected.to respond_to(:service_data) }
+      its(:service_data) { is_expected.to be_an_instance_of(ServiceData) }
+    end
+  end
 
   describe "class methods" do
     context "#new" do
