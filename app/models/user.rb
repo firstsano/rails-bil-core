@@ -16,7 +16,7 @@ class User
   end
 
   def authenticate(password)
-    user_data = self.class.remote_data_service.login(login: login, password: password)
+    user_data = remote_data_service.login(login: login, password: password)
     set_attributes user_data
   end
 

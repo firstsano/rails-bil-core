@@ -21,23 +21,22 @@ module VolgaspotApi
 
   def self.fetch_user_services(id)
     data = send_request get(ROUTES[:user_data] + id.to_s, query: { expand: :services })
-    services = data[:services].values
+    services = data[:services].values.index_by { |service| service[:service_id] }
   end
 
   def self.load_user_services(id)
     fetched_service_data = fetch_user_services id
-    service_datum = ServiceData.where id: fetched_service_data.map { |e| e[:service_id] }
-    fetched_service_data.map do |f|
-      service = Service.new id: f[:service_id]
-      service.service_data = service_datum.find f[:service_id]
-      service.set_attributes cost_month: f[:service_cost]
+    services = Service.where(id: fetched_service_data.keys).all
+    services.map do |service|
+      service.cost_month = fetched_service_data[service.id][:service_cost]
+      service
     end
   end
 
   private
 
   def self.send_request(request)
-    request.parsed_response.with_indifferent_access
+    response = request.parsed_response.with_indifferent_access
     raise Exceptions::RemoteRequestError.new "Remote server couldn't execute request" unless response[:success]
     response[:data]
   end
