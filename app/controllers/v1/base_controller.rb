@@ -1,5 +1,6 @@
 class V1::BaseController < ActionController::API
   include Knock::Authenticable
+  include ::ExceptionsHandler
 
   before_action :authenticate_user
 
