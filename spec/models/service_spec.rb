@@ -3,17 +3,37 @@ require 'rails_helper'
 RSpec.describe Service, type: :model do
   clean_before(:all) { Timecop.freeze }
 
+  it { is_expected.to be_readonly }
+
   describe "instance methods" do
-    context "#service_data" do
-      subject { build :service, :with_service_data }
-      it { is_expected.to respond_to(:service_data) }
-      its(:service_data) { is_expected.to be_an_instance_of(ServiceData) }
+    subject { build :service }
+    let(:service) { subject }
+
+    context "#service_type_name" do
+      it { is_expected.to respond_to(:service_type_name) }
+
+      context "when parent exists" do
+        subject { create :service, :with_parent }
+        its(:service_type_name) { is_expected.to eq subject.parent.name }
+      end
+
+      context "when parent does not exist" do
+        subject { create :service }
+        its(:service_type_name) { is_expected.to be_nil }
+      end
+    end
+
+    context "#parent" do
+      subject { create :service, :with_parent }
+      it { is_expected.to respond_to(:parent) }
+      its(:parent) { is_expected.to be_an_instance_of(Service) }
+    end
+
+    context "#name" do
+      it { is_expected.to respond_to(:name) }
     end
 
     context "#cost_day" do
-      subject { build :service }
-      let(:service) { subject }
-
       it { is_expected.to respond_to(:cost_day) }
 
       context "when cost_month is set" do
@@ -26,16 +46,6 @@ RSpec.describe Service, type: :model do
 
       context "when cost_month is not set" do
         its(:cost_month) { is_expected.to be_nil }
-      end
-    end
-  end
-
-  describe "class methods" do
-    subject { described_class }
-
-    context "::new" do
-      it "should not create service without id specified" do
-        expect{ Service.new }.to raise_error(ArgumentError)
       end
     end
   end

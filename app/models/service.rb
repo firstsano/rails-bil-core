@@ -1,29 +1,17 @@
-class Service
-  include ActiveModel::Model
-  include ActiveModel::Serialization
-  include WhitelistAttributes
+class Service < VolgaspotRecord
+  self.table_name = "services_data"
 
-  attr_reader :id
+  alias_attribute :name, :service_name
+  belongs_to :parent, foreign_key: :parent_service_id, class_name: 'Service', required: false
+
   attr_accessor :cost_month
-  attr_writer :service_data
-
-  def initialize(params = {}, id:)
-    @id = id
-    super params
-  end
-
-  def service_data
-    @service_data ||= ServiceData.find id
-  end
 
   def cost_day
     days_in_month = Time.days_in_month(Date.current.month)
     cost_month ? cost_month.to_f / days_in_month : nil
   end
 
-  private
-
-  def whitelist_params
-    [:cost_month]
+  def service_type_name
+    parent&.service_name
   end
 end

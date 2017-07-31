@@ -4,6 +4,7 @@ FactoryGirl.define do
     outgoing_rest { Faker::Number.decimal(2) }
     discount { Faker::Number.decimal(2) }
     discount_with_tax { discount * 1.2 }
+    service
 
     after(:build) do |discount|
       class << discount

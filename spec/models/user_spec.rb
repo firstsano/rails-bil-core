@@ -14,18 +14,14 @@ RSpec.describe User, type: :model do
     context "#authenticate" do
       let(:user) { User.new }
       let(:password) { Faker::Lorem.word }
+      before { mock_data_service method: :login, output: user_response }
 
       it "should respond to a method with password param" do
         expect(user).to respond_to(:authenticate).with(1).arguments
       end
 
-      it "should call login method of remote_data_service" do
-        expect(data_service).to receive(:login).with(hash_including(password: password))
-        user.authenticate password
-      end
-
       it "should return user with set attributes if login is succeds", aggregate_failures: true do
-        mock_data_service method: :login, output: user_response
+        expect(data_service).to receive(:login).with(hash_including(password: password))
         authenticated_user = user.authenticate password
         user_response.each { |attribute, value| expect(authenticated_user.send(attribute)).to eq value }
       end
@@ -49,13 +45,6 @@ RSpec.describe User, type: :model do
         mock_data_service method: :fetch_user_data, output: user_response
         expect(data_service).to receive(:fetch_user_data).with(1, instance_of(User))
         User.find 1
-      end
-
-      context "when 'fetch_user_data' fails" do
-        it "raises error" do
-          mock_data_service method: :fetch_user_data, output: false
-          expect { User.find(1) }.to raise_error(ActiveRecord::RecordNotFound)
-        end
       end
     end
 
