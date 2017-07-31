@@ -39,13 +39,13 @@ RSpec.describe Service, type: :model do
       context "when cost_month is set" do
         it "should calculate cost_day based on cost_month" do
           service.cost_month = 1000.0
-          expectable_cost = 1000.0 / Time.days_in_month(Date.current.month)
+          expectable_cost = (1000.0 / Time.days_in_month(Date.current.month)).round 2
           expect(service.cost_day).to eq expectable_cost
         end
       end
 
       context "when cost_month is not set" do
-        its(:cost_month) { is_expected.to be_nil }
+        its(:cost_day) { is_expected.to eq 0 }
       end
     end
   end

@@ -10,7 +10,9 @@ RSpec.describe V1::ServicesController, type: :request do
       create_list :service, 5
     end
 
-    before { get route, headers: auth_headers }
+    before do
+      get route, headers: auth_headers
+    end
 
     it_behaves_like 'basic json API response',
       should_have_items: 5,
