@@ -5,8 +5,9 @@ class Service
 
   attr_reader :id
   attr_accessor :cost_month
+  attr_writer :service_data
 
-  def initialize(id, params = {})
+  def initialize(params = {}, id:)
     @id = id
     super params
   end

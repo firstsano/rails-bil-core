@@ -8,6 +8,6 @@ FactoryGirl.define do
       end
     end
 
-    initialize_with { new(id) }
+    initialize_with { new(id: id) }
   end
 end
