@@ -1,7 +1,7 @@
 class Discount < VolgaspotRecord
   self.table_name = "discount_transactions_all"
 
-  belongs_to :service
+  belongs_to :service, foreign_key: :service_id, class_name: 'ServiceData'
 
   scope :by_user_account, -> account { where(account_id: account.id) }
 

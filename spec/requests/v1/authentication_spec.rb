@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::BaseController, type: :request do
-  before { User.remote_data_service = VolgaspotApiService }
+  before { User.remote_data_service = VolgaspotApi }
 
   describe "authorization" do
     setup_auth
