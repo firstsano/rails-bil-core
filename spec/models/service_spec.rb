@@ -31,6 +31,8 @@ RSpec.describe Service, type: :model do
   end
 
   describe "class methods" do
+    subject { described_class }
+
     context "::new" do
       it "should not create service without id specified" do
         expect{ Service.new }.to raise_error(ArgumentError)
