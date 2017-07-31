@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::UsersController, type: :request do
-  before { User.remote_data_service = VolgaspotApiService }
+  before { User.remote_data_service = VolgaspotApi }
   setup_auth
 
   describe "GET show" do

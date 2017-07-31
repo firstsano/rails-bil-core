@@ -1,4 +1,4 @@
-module VolgaspotApiService
+module VolgaspotApi
   include HTTParty
   base_uri ENV["volgaspot_api"]
 

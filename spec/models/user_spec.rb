@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   let(:data_service) { User.remote_data_service }
   let(:user_response) { attributes_for :user }
 
-  def mock_service(method:, output: {})
+  def mock_data_service(method:, output: {})
     allow(data_service).to receive(method).and_return(output)
   end
 
@@ -19,22 +19,23 @@ RSpec.describe User, type: :model do
         expect(user).to respond_to(:authenticate).with(1).arguments
       end
 
-      it "should call 'login' method of remote_data_service" do
-        mock_service method: :login, output: {}
+      it "should call login method of remote_data_service" do
         expect(data_service).to receive(:login).with(hash_including(password: password))
         user.authenticate password
       end
 
       it "should return user with set attributes if login is succeds", aggregate_failures: true do
-        mock_service method: :login, output: user_response
+        mock_data_service method: :login, output: user_response
         authenticated_user = user.authenticate password
         user_response.each { |attribute, value| expect(authenticated_user.send(attribute)).to eq value }
       end
+    end
 
-      it "should return false if login fails" do
-        mock_service method: :login, output: false
-        expect(user.authenticate(password)).to be false
-      end
+    context "#services" do
+      let(:user) { build :user }
+      subject { user }
+      it { is_expected.to respond_to(:services) }
+      it "should get Service instances"
     end
   end
 
@@ -45,14 +46,14 @@ RSpec.describe User, type: :model do
       it { is_expected.to respond_to(:find).with(1).arguments }
 
       it "should call 'fetch_user_data' method of remote_data_service" do
-        mock_service method: :fetch_user_data, output: user_response
+        mock_data_service method: :fetch_user_data, output: user_response
         expect(data_service).to receive(:fetch_user_data).with(1, instance_of(User))
         User.find 1
       end
 
       context "when 'fetch_user_data' fails" do
         it "raises error" do
-          mock_service method: :fetch_user_data, output: false
+          mock_data_service method: :fetch_user_data, output: false
           expect { User.find(1) }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
