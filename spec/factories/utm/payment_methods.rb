@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :payment_method, class: PaymentMethod do
+  factory :payment_method, class: Utm::PaymentMethod do
     name { |i| Faker::Lorem.word + i.to_s }
 
     after(:build) do |payment_method|

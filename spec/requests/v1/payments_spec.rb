@@ -22,7 +22,7 @@ RSpec.describe V1::PaymentsController, type: :request do
         create_list :payment, 20
         discount_range.map(&:to_time).map(&:to_i).each { |d| create :payment, account_id: @user.utm_account, payment_enter_date: d }
         payment_method = create :payment_method
-        Payment.update_all method: payment_method.id
+        Utm::Payment.update_all method: payment_method.id
       end
       before { get route, params: { include: "payment-method", filter: { from: from, to: to } }, headers: auth_headers }
 

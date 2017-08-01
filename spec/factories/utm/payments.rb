@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :payment, class: Payment do
+  factory :payment, class: Utm::Payment do
     payment_absolute { Faker::Number.decimal(2) }
     payment_incurrency { payment_absolute }
 

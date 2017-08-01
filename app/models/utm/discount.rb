@@ -1,4 +1,4 @@
-class Discount < VolgaspotRecord
+class Utm::Discount < Utm::VolgaspotRecord
   self.table_name = "discount_transactions_all"
 
   belongs_to :service, foreign_key: :service_id, class_name: 'Service'

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :discount, class: Discount do
+  factory :discount, class: Utm::Discount do
     incoming_rest { Faker::Number.decimal(2) }
     outgoing_rest { Faker::Number.decimal(2) }
     discount { Faker::Number.decimal(2) }
