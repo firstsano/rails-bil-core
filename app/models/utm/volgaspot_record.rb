@@ -1,4 +1,4 @@
-class VolgaspotRecord < ActiveRecord::Base
+class Utm::VolgaspotRecord < ActiveRecord::Base
   self.abstract_class = true
   establish_connection VOLGASPOT_DB
 

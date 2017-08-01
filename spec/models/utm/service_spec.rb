@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Service, type: :model do
+RSpec.describe Utm::Service, type: :model do
   clean_before(:all) { Timecop.freeze }
 
   it { is_expected.to be_readonly }
@@ -26,7 +26,7 @@ RSpec.describe Service, type: :model do
     context "#parent" do
       subject { create :service, :with_parent }
       it { is_expected.to respond_to(:parent) }
-      its(:parent) { is_expected.to be_an_instance_of(Service) }
+      its(:parent) { is_expected.to be_an_instance_of described_class }
     end
 
     context "#name" do

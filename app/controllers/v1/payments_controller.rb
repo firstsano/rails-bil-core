@@ -2,7 +2,7 @@ class V1::PaymentsController < V1::BaseController
   before_action :get_date_interval
 
   def index
-    @payments = Payment
+    @payments = Utm::Payment
       .includes(:payment_method)
       .date_interval(from: @from, to: @to)
       .by_user_account current_user.utm_account

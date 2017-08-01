@@ -1,4 +1,4 @@
-class Payment < VolgaspotRecord
+class Utm::Payment < Utm::VolgaspotRecord
   include SafeAttributes::Base
 
   self.table_name = "payment_transactions"

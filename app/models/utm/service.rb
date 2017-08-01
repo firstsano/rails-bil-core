@@ -1,4 +1,4 @@
-class Service < VolgaspotRecord
+class Utm::Service < Utm::VolgaspotRecord
   self.table_name = "services_data"
 
   alias_attribute :name, :service_name

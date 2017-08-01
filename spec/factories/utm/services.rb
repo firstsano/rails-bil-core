@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :service, class: Service do
+  factory :service, class: Utm::Service do
     service_type { Faker::Number.between(1, 10) }
     service_name { Faker::Lorem.sentence }
     comment { Faker::Lorem.sentence }
