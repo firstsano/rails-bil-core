@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Utm::Service, type: :model do
-  clean_before(:all) { Timecop.freeze }
+  it_behaves_like "readonly model"
 
-  it { is_expected.to be_readonly }
+  clean_before(:all) { Timecop.freeze }
 
   describe "instance methods" do
     subject { build :service }
