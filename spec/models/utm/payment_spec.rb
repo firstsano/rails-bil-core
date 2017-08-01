@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Utm::Payment, type: :model do
-  it { is_expected.to be_readonly }
+  it_behaves_like "readonly model"
 
   describe "instance methods" do
     context "#payment_method" do
