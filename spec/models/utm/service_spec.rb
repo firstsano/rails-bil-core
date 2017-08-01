@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Utm::Service, type: :model do
+  clean_before(:all) { Timecop.freeze }
+
   it_behaves_like "readonly model"
 
-  clean_before(:all) { Timecop.freeze }
   let(:periodic_service_types) { [1, 2] }
   let(:periodic_service_type) { periodic_service_types.sample }
   before { stub_const("Utm::Service::PERIODIC_SERVICE_TYPES", periodic_service_types) }
