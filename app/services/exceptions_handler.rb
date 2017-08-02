@@ -1,10 +1,8 @@
 module ExceptionsHandler
   extend ActiveSupport::Concern
 
-  class RemoteRequestError < StandardError; end
-
   included do
-    rescue_from ExceptionsHandler::RemoteRequestError, with: :bad_request
+    rescue_from Exceptions::RemoteRequestError, with: :bad_request
   end
 
   private
