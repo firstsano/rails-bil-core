@@ -23,7 +23,7 @@ RSpec.describe VolgaspotApi, type: :module do
 
       it { is_expected.to respond_to(:login) }
 
-      it "should request the route" do
+      it "should send request to the route" do
         stub = stub_vs_request vs_response
         execute_login
         expect(stub).to have_been_requested
@@ -43,7 +43,21 @@ RSpec.describe VolgaspotApi, type: :module do
     end
 
     describe "::fetch_user_data" do
+      let(:user) { build :user, :with_account }
+      let(:route) { "/users/#{user.id}?expand=account" }
 
+      def stub_vs_request(output = {})
+        stub_request(:get, host + route).to_return body: output.to_json,
+          headers: { "Content-Type" => "application/json" }
+      end
+
+      it { is_expected.to respond_to(:fetch_user_data) }
+
+      it "should send request to the route" do
+        stub = stub_vs_request vs_response
+        subject.fetch_user_data user.id, user
+        expect(stub).to have_been_requested
+      end
     end
 
     describe "::fetch_user_services" do
