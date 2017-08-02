@@ -6,11 +6,13 @@ RSpec.describe V1::ServicesController, type: :request do
 
   describe "GET /services/index" do
     let(:route) { "/services/index" }
-    clean_before(:all) do
-      create_list :service, 5
-    end
+    let(:periodic_service_types) { [1, 2] }
+    let(:periodic_service_type) { periodic_service_types.sample }
 
-    before do
+    clean_before(:each) do
+      create_list :service, 10
+      create_list :service, 5, :with_periodic_service_data, service_type: periodic_service_type
+      stub_const("Utm::Service::PERIODIC_SERVICE_TYPES", periodic_service_types)
       get route, headers: auth_headers
     end
 
