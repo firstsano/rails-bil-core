@@ -8,6 +8,12 @@ FactoryGirl.define do
       association :parent, factory: :service
     end
 
+    trait :with_periodic_service_data do
+      after(:create) do |service, evaluator|
+        create :periodic_service_data, id: service.id
+      end
+    end
+
     after(:build) do |service|
       class << service
         def readonly?
