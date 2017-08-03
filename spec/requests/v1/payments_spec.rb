@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe V1::PaymentsController, type: :request do
-  before { User.remote_data_service = VolgaspotApi }
   setup_auth
 
   describe "GET payments" do
@@ -20,7 +19,7 @@ RSpec.describe V1::PaymentsController, type: :request do
         # need to do some magic due to safe attributes
         # and 'save' InvalidArgument error
         create_list :payment, 20
-        discount_range.map(&:to_time).map(&:to_i).each { |d| create :payment, account_id: @user.utm_account, payment_enter_date: d }
+        discount_range.map(&:to_time).map(&:to_i).each { |d| create :payment, account_id: @user.utm_account_id, payment_enter_date: d }
         payment_method = create :payment_method
         Utm::Payment.update_all method: payment_method.id
       end

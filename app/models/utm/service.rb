@@ -6,8 +6,6 @@ class Utm::Service < Utm::VolgaspotRecord
 
   PERIODIC_SERVICE_TYPES = [2, 5]
 
-  delegate :cost_month, to: :service_data
-
   def service_data
     @service_data ||= Utm::PeriodicServiceData.find(id) if is_periodic_service?
   end
@@ -16,8 +14,12 @@ class Utm::Service < Utm::VolgaspotRecord
     PERIODIC_SERVICE_TYPES.include? service_type
   end
 
-  def cost_day
+  def cost_month
     raise Exceptions::EmptyRelationError.new unless service_data
+    service_data.cost_month
+  end
+
+  def cost_day
     days_in_month = Time.days_in_month(Date.current.month)
     (cost_month.to_f / days_in_month).round 2
   end
