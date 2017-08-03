@@ -59,7 +59,6 @@ RSpec.describe Utm::Service, type: :model do
           expect(service.service_data).to be_nil
         end
       end
-
     end
 
     context "#parent" do
@@ -70,25 +69,6 @@ RSpec.describe Utm::Service, type: :model do
 
     context "#name" do
       it { is_expected.to respond_to(:name) }
-    end
-
-    context "#cost_day" do
-      it { is_expected.to respond_to(:cost_day) }
-
-      context "when service_data exists" do
-        it "should calculate cost_day based on cost_month" do
-          service = create :service, service_type: periodic_service_type
-          periodic_service_data = create :periodic_service_data, id: service.id, cost: 1000
-          expectable_cost = (1000.0 / Time.days_in_month(Date.current.month)).round 2
-          expect(service.cost_day).to eq expectable_cost
-        end
-      end
-
-      context "when cost_month is not set" do
-        it "should raise error" do
-          expect{ subject.cost_day }.to raise_error(Exceptions::EmptyRelationError)
-        end
-      end
     end
   end
 
