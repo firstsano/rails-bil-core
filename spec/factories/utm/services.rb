@@ -9,13 +9,18 @@ FactoryGirl.define do
     end
 
     trait :with_periodic_service_data do
-      after(:create) do |service, evaluator|
+      after(:build) do |service|
+        klass = service.class
+        service.service_type = klass::PERIODIC_SERVICE_TYPES.sample
+      end
+
+      after(:create) do |service|
         create :periodic_service_data, id: service.id
       end
     end
 
-    after(:build) do |service|
-      class << service
+    after(:build) do |instance|
+      class << instance
         def readonly?
           false
         end

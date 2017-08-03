@@ -1,18 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe V1::ServicesController, type: :request do
-  before { User.remote_data_service = VolgaspotApi }
   setup_auth
 
   describe "GET /services/index" do
     let(:route) { "/services/index" }
-    let(:periodic_service_types) { [1, 2] }
-    let(:periodic_service_type) { periodic_service_types.sample }
+    let(:user_services) { create_list :service, 5, :with_periodic_service_data }
 
-    clean_before(:each) do
+    clean_before(:all) do
       create_list :service, 10
-      create_list :service, 5, :with_periodic_service_data, service_type: periodic_service_type
-      stub_const("Utm::Service::PERIODIC_SERVICE_TYPES", periodic_service_types)
+      create_list :service, 5, :with_periodic_service_data
+      @user_services = create_list :service, 5, :with_periodic_service_data
+    end
+
+    before(:each) do
+      user_service_ids = @user_services.map(&:id)
+      allow(@user).to receive(:service_ids).and_return user_service_ids
       get route, headers: auth_headers
     end
 

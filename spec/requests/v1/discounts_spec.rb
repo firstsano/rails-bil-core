@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe V1::DiscountsController, type: :request do
-  before { User.remote_data_service = VolgaspotApi }
   setup_auth
 
   describe "GET discounts" do
@@ -18,7 +17,7 @@ RSpec.describe V1::DiscountsController, type: :request do
 
       clean_before(:all) do
         other_discounts = create_list(:discount, 30)
-        discount_range.map(&:to_time).map(&:to_i).each { |d| create :discount, account_id: @user.utm_account, discount_date: d }
+        discount_range.map(&:to_time).map(&:to_i).each { |d| create :discount, account_id: @user.utm_account_id, discount_date: d }
       end
       before { get route, params: { include: :service, filter: { from: from, to: to } }, headers: auth_headers }
 

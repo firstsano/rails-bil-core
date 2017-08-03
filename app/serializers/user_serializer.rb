@@ -3,7 +3,7 @@ class UserSerializer < ActiveModel::Serializer
     :email, :account_id, :balance, :internet_status
 
   def account_id
-    object.vist_account
+    object.vist_account_id
   end
 
   def balance

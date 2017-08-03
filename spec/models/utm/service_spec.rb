@@ -44,17 +44,22 @@ RSpec.describe Utm::Service, type: :model do
     context "#service_data" do
       it { is_expected.to respond_to(:service_data) }
 
-      it "should return PeriodicServiceData instance" do
-        service = create :service, service_type: 1
-        periodic_service_data = create :periodic_service_data, id: service.id
-        expect(service.service_data).to eq periodic_service_data
+      context "when periodic_service_data is properly set" do
+        it "should return PeriodicServiceData instance" do
+          service = create :service, service_type: periodic_service_type
+          periodic_service_data = create :periodic_service_data, id: service.id
+          expect(service.service_data).to eq periodic_service_data
+        end
       end
 
-      it "should return nil", aggregate_failures: true do
-        service = create :service, service_type: 6
-        periodic_service_data = create :periodic_service_data, id: service.id
-        expect(service.service_data).to be_nil
+      context "when wrong service type" do
+        it "should return nil" do
+          service = create :service, service_type: 6
+          periodic_service_data = create :periodic_service_data, id: service.id
+          expect(service.service_data).to be_nil
+        end
       end
+
     end
 
     context "#parent" do

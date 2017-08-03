@@ -7,6 +7,20 @@ FactoryGirl.define do
     mobile_phone { Faker::PhoneNumber.phone_number }
     email { Faker::Internet.email }
     status { "" }
-    vist_account { Faker::Number.number(6) }
+    vist_account_id { Faker::Number.number(6) }
+
+    trait :without_remote_calls do
+      after(:build) do |instance|
+        class << instance
+          attr_accessor :utm_account
+
+          def utm_account_id
+            utm_account.id
+          end
+        end
+
+        instance.utm_account = build :account, id: Faker::Number.number(4)
+      end
+    end
   end
 end

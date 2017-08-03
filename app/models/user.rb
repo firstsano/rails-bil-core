@@ -7,7 +7,7 @@ class User
   self.remote_data_service = VolgaspotApi
 
   attr_accessor :id, :login, :full_name, :actual_address, :status,
-    :mobile_phone, :email, :vist_account, :utm_account
+    :mobile_phone, :email, :vist_account_id
 
   def self.from_token_request(request)
     login = request.params["auth"] && request.params["auth"]["login"]
@@ -21,13 +21,19 @@ class User
   end
 
   def self.find(user_id)
-    user = self.new(utm_account: Account.new)
-    remote_data_service.fetch_user_data(user_id, user)
-    user
+    self.new remote_data_service.fetch_user_data(user_id)
   end
 
-  def services
-    @services ||= remote_data_service.load_user_services(id)
+  def utm_account_id
+    @utm_account_id ||= remote_data_service.fetch_user_utm_account id
+  end
+
+  def utm_account
+    @utm_account ||= Utm::Account.find utm_account_id
+  end
+
+  def service_ids
+    @service_ids ||= remote_data_service.fetch_user_services id
   end
 
   private
@@ -38,22 +44,6 @@ class User
 
   def whitelist_params
     [:id, :login, :full_name, :actual_address, :status,
-      :mobile_phone, :email, :vist_account]
-  end
-
-  class Account
-    include ActiveModel::Model
-    include ActiveModel::Serialization
-    include WhitelistAttributes
-
-    attr_accessor :id, :balance, :credit, :int_status, :is_blocked
-
-    alias_attribute :internet_status, :int_status
-
-    private
-
-    def whitelist_params
-      [:id, :balance, :credit, :int_status, :is_blocked]
-    end
+      :mobile_phone, :email, :vist_account_id]
   end
 end
