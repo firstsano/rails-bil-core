@@ -19,13 +19,13 @@ RSpec.describe V1::DiscountsController, type: :request do
         other_discounts = create_list(:discount, 30)
         discount_range.map(&:to_time).map(&:to_i).each { |d| create :discount, account_id: @user.utm_account_id, discount_date: d }
       end
-      before { get route, params: { include: :service, filter: { from: from, to: to } }, headers: auth_headers }
+      before { get route, params: { include: "service-data", filter: { from: from, to: to } }, headers: auth_headers }
 
       it_behaves_like 'basic json API response',
         should_have_items: 5,
         required_attributes: ["incoming-rest", "outgoing-rest", "discount", "discount-with-tax", "discount-date"]
-      it_behaves_like 'json API response with relationships', "service"
-      it_behaves_like 'json API response with included', "services"
+      it_behaves_like 'json API response with relationships', "service-data"
+      it_behaves_like 'json API response with included', "service-datum"
     end
 
     after(:all) { Timecop.return }
