@@ -10,24 +10,24 @@ module VolgaspotApi
   }
 
   def self.login(login:, password:)
-    parse_response put(route(:login), body: { login: login, password: password })
+    parse_response put(get_route(:login), body: { login: login, password: password })
   end
 
-  def self.fetch_user_data(id, user)
+  def self.fetch_user_data(id)
     route = get_route :user_data, user_id: id
     parse_response get(route), with_transform: :user_data
   end
 
   def self.fetch_user_utm_account(id)
     route = get_route :user_account, user_id: id
-    data = parse_response get(route), with_transform: :user_data
+    data = parse_response get(route), with_transform: :user_utm_account
     data[:utm_account_id]
   end
 
   def self.fetch_user_services(id)
     route = get_route :user_services, user_id: id
     data = parse_response get(route), with_transform: :services_data
-    data.keys
+    data[:service_ids]
   end
 
   private
@@ -48,11 +48,17 @@ module VolgaspotApi
   module ApiDataTransformer
     def self.transform_user_data(data)
       data[:vist_account] = data[:account_id]
+    end
+
+    def self.transform_user_utm_account(data)
       data[:utm_account_id] = data[:account][:id]
     end
 
     def self.transform_services_data(data)
-      data[:services].values.index_by { |service| service[:service_id] }
+      data[:service_ids] = data[:services]
+        .values
+        .index_by { |service| service[:service_id] }
+        .keys
     end
   end
 end
