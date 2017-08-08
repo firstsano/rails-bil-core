@@ -4,7 +4,7 @@ FactoryGirl.define do
     outgoing_rest { Faker::Number.decimal(2) }
     discount { Faker::Number.decimal(2) }
     discount_with_tax { discount * 1.2 }
-    association :service, :with_periodic_service_data
+    service_data
 
     after(:build) do |instance|
       class << instance

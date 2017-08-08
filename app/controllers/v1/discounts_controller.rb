@@ -3,7 +3,7 @@ class V1::DiscountsController < V1::BaseController
 
   def index
     @discounts = Utm::Discount
-      .includes(:service)
+      .includes(:service_data)
       .date_interval(from: @from, to: @to)
       .by_user_account current_user.utm_account
     render @discounts

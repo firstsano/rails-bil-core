@@ -5,12 +5,10 @@ RSpec.describe V1::ServicesController, type: :request do
 
   describe "GET /services/index" do
     let(:route) { "/services/index" }
-    let(:user_services) { create_list :service, 5, :with_periodic_service_data }
 
     clean_before(:all) do
-      create_list :service, 10
-      create_list :service, 5, :with_periodic_service_data
-      @user_services = create_list :service, 5, :with_periodic_service_data
+      create_list :periodic_service, 5
+      @user_services = create_list :periodic_service, 5
     end
 
     before(:each) do
@@ -21,6 +19,6 @@ RSpec.describe V1::ServicesController, type: :request do
 
     it_behaves_like 'basic json API response',
       should_have_items: 5,
-      required_attributes: ["name", "service-type", "description", "cost-month", "cost-day"]
+      required_attributes: ["name", "type-of-service", "description", "cost-month", "cost-day"]
   end
 end
