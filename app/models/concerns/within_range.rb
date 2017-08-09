@@ -1,4 +1,4 @@
-module DateInterval
+module WithinRange
   extend ActiveSupport::Concern
 
   class_methods do

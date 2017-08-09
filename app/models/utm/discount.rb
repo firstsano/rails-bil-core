@@ -1,5 +1,5 @@
 class Utm::Discount < Utm::VolgaspotRecord
-  include DateInterval
+  include WithinRange
 
   self.table_name = "discount_transactions_all"
   within_range_attribute :discount_date

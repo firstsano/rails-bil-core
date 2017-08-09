@@ -1,6 +1,6 @@
 class Utm::Payment < Utm::VolgaspotRecord
   include SafeAttributes::Base
-  include DateInterval
+  include WithinRange
 
   self.table_name = "payment_transactions"
   within_range_attribute :payment_enter_date
