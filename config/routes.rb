@@ -17,5 +17,9 @@ Rails.application.routes.draw do
     namespace :services do
       get :index
     end
+
+    namespace :available_services, path: "available-services" do
+      get :index
+    end
   end
 end
