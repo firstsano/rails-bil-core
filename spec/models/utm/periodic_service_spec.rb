@@ -6,6 +6,10 @@ RSpec.describe Utm::PeriodicService, type: :model do
   describe "instance methods" do
     subject { create :periodic_service }
 
+    context "#tariffs" do
+      it { is_expected.to respond_to(:tariffs) }
+    end
+
     context "#cost_month" do
       it { is_expected.to respond_to(:cost_month) }
       its(:cost) { is_expected.to eq subject.cost_month }
