@@ -8,8 +8,12 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'
-# Use postgresql as the database for Active Record
+
+# Database gems
 gem 'pg'
+gem 'mysql2'
+gem 'sequel-rails'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -26,10 +30,7 @@ gem 'rack-cors'
 gem 'figaro'
 gem 'knock'
 gem 'httparty'
-gem 'activeresource', github: 'rails/activeresource', branch: 'master', require: 'active_resource'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'baby_squeel'
-gem 'safe_attributes', require: 'safe_attributes/base'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
