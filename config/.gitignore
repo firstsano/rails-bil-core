@@ -1,0 +1,8 @@
+# Ignore application configuration
+/application.yml
+
+# Ignore application specific secrets
+/secrets.yml
+
+# Ignore database settings
+/database.yml

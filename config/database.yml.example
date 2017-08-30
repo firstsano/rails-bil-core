@@ -1,0 +1,40 @@
+# Application connection
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: username
+  password: password
+
+development:
+  <<: *default
+  database: db_dev
+
+production:
+  <<: *default
+  database: db
+
+test:
+  <<: *default
+  database: db_test
+
+# UTM connection
+
+utm_default: &utm_default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: username
+  password: password
+
+utm_development:
+  <<: *utm_default
+  database: utm_db_dev
+
+utm_production:
+  <<: *utm_default
+  database: utm_db
+
+utm_test:
+  <<: *utm_default
+  database: utm_db_test

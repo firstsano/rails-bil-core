@@ -1,3 +1,2 @@
-class Utm::PaymentMethod < Utm::VolgaspotRecord
-  self.table_name = "payment_methods"
+class Utm::PaymentMethod < Sequel::Model(RCore::SequelDb.utm_db[:payment_methods])
 end

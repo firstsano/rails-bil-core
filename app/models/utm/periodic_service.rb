@@ -1,7 +1,6 @@
-class Utm::PeriodicService < Utm::VolgaspotRecord
-  has_and_belongs_to_many :tariffs, class_name: "Utm::PeriodicService", join_table: "tariffs_services_link",
+class Utm::PeriodicService < Sequel::Model(RCore::SequelDb.utm_db[:periodic_services_data])
+  many_to_many :tariffs, class_name: "Utm::PeriodicService", join_table: "tariffs_services_link",
     foreign_key: :tariff_id, association_foreign_key: :service_id
-  self.table_name = "periodic_services_data"
 
   alias_attribute :cost_month, :cost
 
