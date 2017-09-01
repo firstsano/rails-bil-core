@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Utm::ServiceData, type: :model do
-  clean_before(:all) { Timecop.freeze }
-
   it_behaves_like "readonly model"
 
   let(:periodic_service_types) { [1, 2] }
@@ -37,6 +35,4 @@ RSpec.describe Utm::ServiceData, type: :model do
       it { is_expected.to respond_to(:name) }
     end
   end
-
-  after(:all) { Timecop.return }
 end

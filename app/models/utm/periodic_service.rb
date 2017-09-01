@@ -1,6 +1,8 @@
 class Utm::PeriodicService < Sequel::Model(RCore::SequelDb.utm_db[:periodic_services_data])
-  many_to_many :tariffs, class_name: "Utm::PeriodicService", join_table: "tariffs_services_link",
-    foreign_key: :tariff_id, association_foreign_key: :service_id
+  include ReadOnlyRecords
+
+  many_to_many :tariffs, class: Utm::Tariff, join_table: "tariffs_services_link",
+    left_key: :tariff_id, right_key: :service_id
 
   alias_attribute :cost_month, :cost
 
@@ -9,9 +11,7 @@ class Utm::PeriodicService < Sequel::Model(RCore::SequelDb.utm_db[:periodic_serv
   SERVICE_TYPES = [2, 5]
 
   def service_data
-    @service_data ||= Utm::ServiceData
-      .where(service_type: SERVICE_TYPES)
-      .find id
+    @service_data ||= Utm::ServiceData.where(service_type: SERVICE_TYPES)[id]
   end
 
   def cost_day

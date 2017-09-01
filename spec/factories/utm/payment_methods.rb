@@ -1,13 +1,15 @@
 FactoryGirl.define do
-  factory :payment_method, class: Utm::PaymentMethod do
-    name { |i| Faker::Lorem.word + i.to_s }
+  to_create { |instance| instance.save }
 
-    after(:build) do |payment_method|
-      class << payment_method
+  factory :payment_method, class: Utm::PaymentMethod do
+    after(:build) do |instance|
+      class << instance
         def readonly?
           false
         end
       end
     end
+
+    name { |i| Faker::Lorem.word + i.to_s }
   end
 end
