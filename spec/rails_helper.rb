@@ -80,7 +80,6 @@ RSpec.configure do |config|
 
   # Mix in additional helpers
   config.extend Authentication
-  config.extend DatabaseCleanHelpers
   config.include Requests::JsonHelpers, type: :request
   config.include Requests::HeadersHelpers, type: :request
   config.include JsonExpressions, type: :request

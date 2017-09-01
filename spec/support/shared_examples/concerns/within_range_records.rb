@@ -20,6 +20,4 @@ RSpec.shared_examples "model with within_range method" do |attribute|
     expect(within_range_records).to all(have_attributes(key => be >= range.start.to_i ))
     expect(within_range_records).to all(have_attributes(key => be <= range.stop.to_i ))
   end
-
-  clean
 end

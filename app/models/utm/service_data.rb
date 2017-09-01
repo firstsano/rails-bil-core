@@ -1,5 +1,7 @@
 class Utm::ServiceData < Sequel::Model(RCore::SequelDb.utm_db[:services_data])
-  one_to_one :parent, foreign_key: :parent_service_id, class_name: 'ServiceData', required: false
+  include ReadOnlyRecords
+
+  one_to_one :parent, key: :parent_service_id, class: Utm::ServiceData
 
   alias_attribute :name, :service_name
   alias_attribute :description, :comment
