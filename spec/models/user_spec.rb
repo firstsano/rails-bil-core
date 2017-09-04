@@ -37,6 +37,17 @@ RSpec.describe User, type: :model do
       end
     end
 
+    context "#utm_account" do
+      let(:accounts) { create_list :account, 10 }
+      it { is_expected.to respond_to(:utm_account) }
+
+      it "should return user" do
+        user_account = accounts.sample
+        allow(user).to receive(:utm_account_id).and_return(user_account.id)
+        expect(user.utm_account).to eq user_account
+      end
+    end
+
     context "#service_ids" do
       it { is_expected.to respond_to(:service_ids) }
 

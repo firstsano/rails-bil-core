@@ -29,7 +29,7 @@ class User
   end
 
   def utm_account
-    @utm_account ||= Utm::Account.find utm_account_id
+    @utm_account ||= Utm::Account[utm_account_id]
   end
 
   def service_ids
