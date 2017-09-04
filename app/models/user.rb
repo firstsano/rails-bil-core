@@ -39,7 +39,7 @@ class User
   private
 
   def self.raise_user_not_found
-    raise ActiveRecord::RecordNotFound
+    raise Exceptions::RecordNotFound
   end
 
   def whitelist_params

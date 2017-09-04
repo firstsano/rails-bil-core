@@ -3,9 +3,9 @@ class V1::PaymentsController < V1::BaseController
 
   def index
     @payments = Utm::Payment
-      .includes(:payment_method)
       .within_range(@date_range)
-      .by_user_account current_user.utm_account
+      .by_user_account(current_user.utm_account)
+      .all
     render @payments
   end
 end

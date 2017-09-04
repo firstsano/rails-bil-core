@@ -15,15 +15,15 @@ RSpec.describe V1::PaymentsController, type: :request do
       let(:from) { discount_range[5] }
       let(:to) { discount_range[10] }
 
-      clean_before(:all) do
-        # need to do some magic due to safe attributes
-        # and 'save' InvalidArgument error
-        create_list :payment, 20
-        discount_range.map(&:to_time).map(&:to_i).each { |d| create :payment, account_id: @user.utm_account_id, payment_enter_date: d }
+      before do
         payment_method = create :payment_method
-        Utm::Payment.update_all method: payment_method.id
+        create_list :payment, 20
+        discount_range.map(&:to_time).map(&:to_i).each do |date|
+          create :payment, account_id: @user.utm_account_id,
+            payment_enter_date: date, payment_method_id: payment_method.id
+        end
+        get route, params: { include: "payment-method", filter: { from: from, to: to } }, headers: auth_headers
       end
-      before { get route, params: { include: "payment-method", filter: { from: from, to: to } }, headers: auth_headers }
 
       it_behaves_like 'basic json API response',
         should_have_items: 5,

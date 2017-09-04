@@ -6,12 +6,9 @@ RSpec.describe V1::ServicesController, type: :request do
   describe "GET /services/index" do
     let(:route) { "/services/index" }
 
-    clean_before(:all) do
+    before do
       create_list :periodic_service, 5
       @user_services = create_list :periodic_service, 5
-    end
-
-    before(:each) do
       user_service_ids = @user_services.map(&:id)
       allow(@user).to receive(:service_ids).and_return user_service_ids
       get route, headers: auth_headers

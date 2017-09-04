@@ -12,5 +12,9 @@ class Utm::Payment < Sequel::Model(setup_table)
 
   many_to_one :payment_method, key: :payment_method_id, class: Utm::PaymentMethod
 
-  # scope :by_user_account, -> account { where(account_id: account.id) }
+  dataset_module do
+    def by_user_account(account)
+      where(account_id: account.id)
+    end
+  end
 end

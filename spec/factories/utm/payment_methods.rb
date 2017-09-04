@@ -10,6 +10,6 @@ FactoryGirl.define do
       end
     end
 
-    name { |i| Faker::Lorem.word + i.to_s }
+    sequence(:name) { |i| "#{Faker::Lorem.word}_#{i}" }
   end
 end
