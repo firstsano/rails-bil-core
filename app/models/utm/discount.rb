@@ -6,5 +6,9 @@ class Utm::Discount < Sequel::Model(RCore::SequelDb.utm_db[:discount_transaction
 
   many_to_one :service_data, key: :service_id, class: Utm::ServiceData
 
-  # scope :by_user_account, -> account { where(account_id: account.id) }
+  dataset_module do
+    def by_user_account(account)
+      where(account_id: account.id)
+    end
+  end
 end

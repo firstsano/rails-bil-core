@@ -15,11 +15,11 @@ RSpec.describe V1::DiscountsController, type: :request do
       let(:from) { discount_range[5] }
       let(:to) { discount_range[10] }
 
-      clean_before(:all) do
+      before do
         other_discounts = create_list(:discount, 30)
         discount_range.map(&:to_time).map(&:to_i).each { |d| create :discount, account_id: @user.utm_account_id, discount_date: d }
+        get route, params: { include: "service-data", filter: { from: from, to: to } }, headers: auth_headers
       end
-      before { get route, params: { include: "service-data", filter: { from: from, to: to } }, headers: auth_headers }
 
       it_behaves_like 'basic json API response',
         should_have_items: 5,

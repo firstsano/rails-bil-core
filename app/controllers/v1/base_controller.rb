@@ -5,7 +5,7 @@ class V1::BaseController < ActionController::API
   before_action :authenticate_user
 
   def render(resource)
-    super json: resource, include: inclusion_options
+    super json: serialize_model(resource)
   end
 
   def prepare_date_range
@@ -14,15 +14,13 @@ class V1::BaseController < ActionController::API
     @date_range = DateTimeRange.generate start: from, stop: to
   end
 
-  private
-
-  def inclusion_options
-    return [] unless params[:include]
-    params[:include]
-      .split(/[,\.]/)
-      .uniq
-      .map(&:underscore)
+  def serialize_model(model, options = {})
+    options[:is_collection] = model.is_a?(Array)
+    options[:include] = params[:include]
+    JSONAPI::Serializer.serialize(model, options)
   end
+
+  private
 
   def get_filter_params(*attributes)
     return attributes.count.times.map { nil } unless params[:filter]

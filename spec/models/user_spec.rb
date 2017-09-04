@@ -70,7 +70,7 @@ RSpec.describe User, type: :model do
       it { is_expected.to respond_to(:from_token_request) }
 
       it "raises error when login is not provided with the request" do
-        expect { User.from_token_request(request) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { User.from_token_request(request) }.to raise_error(Exceptions::RecordNotFound)
       end
 
       it "creates new user instance with login from request params", aggregate_failures: true do

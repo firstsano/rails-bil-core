@@ -1,5 +1,3 @@
-class Utm::PaymentMethodSerializer < ActiveModel::Serializer
-  type :payment_methods
-
+class Utm::PaymentMethodSerializer < BaseSerializer
   attributes :id, :name
 end
