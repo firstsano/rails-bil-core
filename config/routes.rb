@@ -14,11 +14,12 @@ Rails.application.routes.draw do
       get :show
     end
 
-    namespace :services do
+    namespace :tariffs do
       get :index
+      get :available
     end
 
-    namespace :available_services, path: "available-services" do
+    namespace :services do
       get :index
     end
   end
