@@ -46,12 +46,12 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
+  gem 'rubocop', '~> 0.50.0', require: false
+
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
   gem 'capistrano-touch-linked-files'
-
-  # Remove the following if your app does not use Rails
   gem 'capistrano-rails'
 end
 
