@@ -1,5 +1,7 @@
-class V1::UsersController < V1::BaseController
-  def show
-    render current_user
+module V1
+  class UsersController < BaseController
+    def show
+      render current_user
+    end
   end
 end

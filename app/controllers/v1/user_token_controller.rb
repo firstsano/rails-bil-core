@@ -1,2 +1,4 @@
-class V1::UserTokenController < Knock::AuthTokenController
+module V1
+  class UserTokenController < ::Knock::AuthTokenController
+  end
 end
