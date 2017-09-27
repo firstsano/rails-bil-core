@@ -14,6 +14,9 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore rubocop settings
+/.rubocop.yml
+
 # Ignore coverage reports
 /coverage
 
