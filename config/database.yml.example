@@ -1,4 +1,7 @@
-# Application connection
+##########################
+# Application connection #
+##########################
+
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -18,7 +21,9 @@ test:
   <<: *default
   database: db_test
 
-# UTM connection
+##################
+# UTM connection #
+##################
 
 utm_default: &utm_default
   adapter: postgresql
@@ -28,13 +33,13 @@ utm_default: &utm_default
   password: password
 
 utm_development:
-  <<: *utm_default
-  database: utm_db_dev
+  <<: *default
+  database: db_dev
 
 utm_production:
-  <<: *utm_default
-  database: utm_db
+  <<: *default
+  database: db
 
 utm_test:
-  <<: *utm_default
-  database: utm_db_test
+  <<: *default
+  database: db_test
