@@ -5,13 +5,12 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'
 
 # Database gems
-gem 'pg'
 gem 'mysql2'
+gem 'pg'
 gem 'sequel-rails'
 
 # Use Puma as the app server
@@ -26,16 +25,16 @@ gem 'puma', '~> 3.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'rack-cors'
+gem 'exception_notification'
 gem 'figaro'
-gem 'knock'
 gem 'httparty'
 gem 'jsonapi-serializers'
-gem 'exception_notification'
+gem 'knock'
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '~> 3.5'
   gem 'simplecov', :require => false
 end
@@ -51,8 +50,8 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
-  gem 'capistrano-touch-linked-files'
   gem 'capistrano-rails'
+  gem 'capistrano-touch-linked-files'
 end
 
 group :test do
@@ -70,4 +69,4 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
