@@ -7,12 +7,12 @@ class User
   self.remote_data_service = VolgaspotApi
 
   attr_accessor :id, :login, :full_name, :actual_address, :status,
-    :mobile_phone, :email, :vist_account_id
+                :mobile_phone, :email, :vist_account_id
 
   def self.from_token_request(request)
-    login = request.params["auth"] && request.params["auth"]["login"]
-    raise_user_not_found unless login
-    self.new login: login
+    login = request.params&.[]("auth")&.[]("login")
+    raise Exceptions::RecordNotFound unless login
+    new login: login
   end
 
   def authenticate(password)
@@ -21,7 +21,7 @@ class User
   end
 
   def self.find(user_id)
-    self.new remote_data_service.fetch_user_data(user_id)
+    new remote_data_service.fetch_user_data(user_id)
   end
 
   def utm_account_id
@@ -38,12 +38,8 @@ class User
 
   private
 
-  def self.raise_user_not_found
-    raise Exceptions::RecordNotFound
-  end
-
   def whitelist_params
-    [:id, :login, :full_name, :actual_address, :status,
-      :mobile_phone, :email, :vist_account_id]
+    %I[id login full_name actual_address status
+       mobile_phone email vist_account_id]
   end
 end
