@@ -2,16 +2,16 @@ module ReadOnlyRecords
   extend ActiveSupport::Concern
 
   def readonly?
-    true
+    true unless Rails.env.test?
   end
 
   def before_save
-    return false if readonly?
+    cancel_action if readonly?
     super
   end
 
   def before_destroy
-    return false if readonly?
+    cancel_action if readonly?
     super
   end
 end

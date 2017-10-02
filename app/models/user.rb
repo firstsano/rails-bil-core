@@ -32,6 +32,18 @@ class User
     @utm_account ||= Utm::Account[utm_account_id]
   end
 
+  def tariffs
+    Utm::Tariff.where(id: services.select(:tariff_id))
+  end
+
+  def services
+    Utm::ServiceData.where(id: service_ids)
+  end
+
+  def available_tariffs
+    Utm::Tariff.where(id: remote_data_service.fetch_user_available_tariffs(id))
+  end
+
   def service_ids
     @service_ids ||= remote_data_service.fetch_user_services id
   end
