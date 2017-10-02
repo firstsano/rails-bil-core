@@ -6,7 +6,8 @@ module VolgaspotApi
     login: "/customer-sessions/login",
     user_data: "/users/user_id",
     user_account: "/users/user_id?expand=account",
-    user_services: "/users/user_id?expand=services"
+    user_services: "/users/user_id?expand=services",
+    user_available_tariffs: "/users/user_id/available-tariffs"
   }
 
   def self.login(login:, password:)
@@ -28,6 +29,12 @@ module VolgaspotApi
     route = get_route :user_services, user_id: id
     data = parse_response get(route), with_transform: :services_data
     data[:service_ids]
+  end
+
+  def self.fetch_user_available_tariffs(id)
+    route = get_route :user_available_tariffs, user_id: id
+    data = parse_response get(route)
+    data.keys
   end
 
   private
