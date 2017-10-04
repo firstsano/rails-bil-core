@@ -22,5 +22,10 @@ Rails.application.routes.draw do
     namespace :services do
       get :index
     end
+
+    namespace :promised_payments, path: 'promised-payments' do
+      get :show
+      put :use
+    end
   end
 end
