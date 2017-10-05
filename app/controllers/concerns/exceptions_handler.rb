@@ -2,13 +2,12 @@ module ExceptionsHandler
   extend ActiveSupport::Concern
 
   included do
-    rescue_from Exceptions::RemoteRequestError, with: :bad_request
-    rescue_from Exceptions::RecordNotFound, with: :bad_request
+    rescue_from Exceptions::RemoteRequestError, with: :service_unavailable
   end
 
   private
 
-  def bad_request(error)
-    render []
+  def service_unavailable(error)
+    head :service_unavailable
   end
 end
