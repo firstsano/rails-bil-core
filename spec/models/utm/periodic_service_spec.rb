@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Utm::PeriodicService, type: :model do
-  it_behaves_like "readonly model"
-
   describe "instance methods" do
     subject { create :periodic_service }
 
