@@ -3,12 +3,12 @@ module ExceptionsHandler
 
   included do
     rescue_from Exceptions::RemoteRequestError, with: :bad_request
+    rescue_from Exceptions::RecordNotFound, with: :bad_request
   end
 
   private
 
   def bad_request(error)
     render []
-    # json_response({ message: error.message }, :bad_request)
   end
 end
