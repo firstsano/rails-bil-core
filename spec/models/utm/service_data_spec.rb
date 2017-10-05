@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Utm::ServiceData, type: :model do
-  it_behaves_like "readonly model"
-
   let(:periodic_service_types) { [1, 2] }
   let(:periodic_service_type) { periodic_service_types.sample }
   before { stub_const("Utm::Service::PERIODIC_SERVICE_TYPES", periodic_service_types) }

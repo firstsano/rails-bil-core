@@ -28,7 +28,6 @@ RSpec.describe VolgaspotApi, type: :module do
   context "module methods" do
     let(:host) { ENV["volgaspot_api"] }
     let(:user) { build :user, :without_remote_calls }
-    it { should be_const_defined(:ROUTES) }
 
     def stub_vs_request(output = {})
       stub_request(method, host + route).to_return body: output.to_json,
