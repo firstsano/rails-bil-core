@@ -5,13 +5,8 @@ module V1
 
     before_action :authenticate_user
 
-    def render(resource, raw: false)
-      model = if raw
-        { data: resource }
-      else
-        serialize_model(resource)
-      end
-      super json: model
+    def render(resource)
+      super json: serialize_model(resource)
     end
 
     def prepare_date_range
@@ -22,9 +17,9 @@ module V1
     end
 
     def serialize_model(model, options = {})
-      options[:is_collection] = model.is_a?(Array)
+      options[:is_collection] = model.respond_to? :each
       options[:include] = params[:include]
-      JSONAPI::Serializer.serialize(model, options)
+      JSONAPI::Serializer.safe_serialize(model, options)
     end
 
     private
