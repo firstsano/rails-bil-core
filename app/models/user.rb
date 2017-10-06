@@ -48,6 +48,14 @@ class User
     @service_ids ||= remote_data_service.fetch_user_services id
   end
 
+  def promised_payment_status
+    remote_data_service.fetch_user_promised_payment_status id
+  end
+
+  def use_promised_payment
+    remote_data_service.use_promised_payment id
+  end
+
   private
 
   def whitelist_params
