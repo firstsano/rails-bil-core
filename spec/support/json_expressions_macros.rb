@@ -1,6 +1,6 @@
 module JsonExpressions
   def simple_response_pattern
-    { data: Array }
+    { data: wildcard_matcher }
   end
 
   def collection_response_pattern(collection)

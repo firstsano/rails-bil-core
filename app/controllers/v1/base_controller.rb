@@ -5,8 +5,13 @@ module V1
 
     before_action :authenticate_user
 
-    def render(resource)
-      super json: serialize_model(resource)
+    def render(resource, raw: false)
+      model = if raw
+        { data: resource }
+      else
+        serialize_model(resource)
+      end
+      super json: model
     end
 
     def prepare_date_range
