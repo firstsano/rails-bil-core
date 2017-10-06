@@ -23,7 +23,7 @@ module VolgaspotApi
     VolgaspotApi::Requests::PromisedPaymentStatus.new(user_id: id).call
   end
 
-  def self.use_promised_payment(user_id)
+  def self.use_promised_payment(id)
     VolgaspotApi::Requests::UsePromisedPayment.new(user_id: id).call
   end
 end
