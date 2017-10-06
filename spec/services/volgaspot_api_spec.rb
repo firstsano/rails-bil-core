@@ -40,9 +40,8 @@ RSpec.describe VolgaspotApi, type: :module do
 
     describe "::login" do
       let(:method) { :put }
-      let(:arguments) { { login: Faker::Lorem.word, password: Faker::Lorem.word } }
       let(:route) { "/customer-sessions/login" }
-      let(:send_method) { subject.login **arguments }
+      let(:send_method) { subject.login login: Faker::Lorem.word, password: Faker::Lorem.word }
 
       it { is_expected.to respond_to(:login) }
       it_behaves_like "sending request to proper routes", {}
@@ -65,14 +64,13 @@ RSpec.describe VolgaspotApi, type: :module do
       let(:send_method) { subject.fetch_user_utm_account user.id }
 
       it { is_expected.to respond_to(:fetch_user_utm_account) }
+      it_behaves_like "sending request to proper routes", { id: 1515, login: "vs0354", account: { id: 781 } }
+      it_behaves_like "rising error on bad responses"
 
       it "should return only account id" do
         stub_vs_request vs_response(output: { id: 1515, login: "vs0354", account: { id: 781 } })
         expect(send_method).to eq 781
       end
-
-      it_behaves_like "sending request to proper routes", { id: 1515, login: "vs0354", account: { id: 781 } }
-      it_behaves_like "rising error on bad responses"
     end
 
     describe "::fetch_user_services" do
@@ -81,13 +79,32 @@ RSpec.describe VolgaspotApi, type: :module do
       let(:send_method) { subject.fetch_user_services user.id }
 
       it { is_expected.to respond_to(:fetch_user_services) }
+      it_behaves_like "sending request to proper routes", { services: { "1" => { service_id: 1 }, "2" => { service_id: 2 } } }
+      it_behaves_like "rising error on bad responses"
 
       it "should return array of service_id" do
         stub_vs_request vs_response(output: { services: { "12" => { service_id: 1 }, "32" => { service_id: 2 } } })
         expect(send_method).to eq [1, 2]
       end
+    end
 
-      it_behaves_like "sending request to proper routes", { services: { "1" => { service_id: 1 }, "2" => { service_id: 2 } } }
+    describe "::fetch_user_promised_payment_status" do
+      let(:method) { :get }
+      let(:route) { "/users/#{user.id}/promised-payment-status" }
+      let(:send_method) { subject.fetch_user_promised_payment_status user.id }
+
+      it  { is_expected.to respond_to(:fetch_user_promised_payment_status) }
+      it_behaves_like "sending request to proper routes", { available: true }
+      it_behaves_like "rising error on bad responses"
+    end
+
+    describe "::use_promised_payment" do
+      let(:method) { :put }
+      let(:route) { "/users/#{user.id}/use-promised-payment" }
+      let(:send_method) { subject.use_promised_payment user.id }
+
+      it  { is_expected.to respond_to(:use_promised_payment) }
+      it_behaves_like "sending request to proper routes", { data: true }
       it_behaves_like "rising error on bad responses"
     end
   end
