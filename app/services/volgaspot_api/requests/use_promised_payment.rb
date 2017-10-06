@@ -6,6 +6,10 @@ module VolgaspotApi
       def initialize(user_id:)
         super
       end
+
+      def send_request
+        @response = self.class.put route(@request_params)
+      end
     end
   end
 end
