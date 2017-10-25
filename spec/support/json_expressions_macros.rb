@@ -1,47 +1,52 @@
 module JsonExpressions
-  def simple_response_pattern
-    { data: wildcard_matcher }
+  module Helpers
+    def wildcard_matcher
+      ::JsonExpressions::WILDCARD_MATCHER
+    end
+
+    def require_attributes_presence(attributes)
+      attributes
+      .map { |a| [a, wildcard_matcher] }
+      .to_h
+    end
   end
 
-  def collection_response_pattern(collection)
-    { data: collection.strict! }
-  end
+  module JsonSpec
+    include Helpers
 
-  def response_pattern(with_items: false, required_attributes: nil)
-    return simple_response_pattern unless with_items
-    collection_response_pattern with_items.times.map { resource_pattern required_attributes }
-  end
+    def resource(attributes)
+      attributes_matcher = attributes ? require_attributes_presence(attributes) : Array
+      {
+        id: wildcard_matcher,
+        type: wildcard_matcher,
+        attributes: attributes_matcher
+      }
+    end
 
-  def resource_pattern(attributes = nil)
-    {
-      id: wildcard_matcher,
-      type: wildcard_matcher,
-      attributes: resource_attributes_pattern(attributes)
-    }
-  end
+    def relationships(type)
+      {
+        data: [
+          relationships: {
+            :"#{type}" => wildcard_matcher
+          }
+        ]
+      }
+    end
 
-  def resource_attributes_pattern(attributes = nil)
-    return Array unless attributes
-    Hash[ attributes.map { |a| [a, wildcard_matcher] } ]
-  end
+    def inclusion(type)
+      {
+        included: [
+          {
+            type: type
+          }
+        ]
+      }
+    end
 
-  def relationships_pattern(type)
-    {
-      data: [
-        relationships: {
-          :"#{type}" => wildcard_matcher
-        }
-      ]
-    }
-  end
-
-  def inclusion_pattern(type)
-    {
-      included: [
-        {
-          type: type
-        }
-      ]
-    }
+    def collection(items:, attributes: nil)
+      resource_attributes = resource attributes
+      collection = Array.new items, resource_attributes
+      { data: collection.strict! }
+    end
   end
 end
