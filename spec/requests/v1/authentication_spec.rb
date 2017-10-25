@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../requests_helper'
 
 RSpec.describe V1::BaseController, type: :request do
   describe "authorization" do
@@ -7,7 +7,7 @@ RSpec.describe V1::BaseController, type: :request do
 
     context "when user is not authorized" do
       it "should return not_authorized status" do
-        get route, headers: json_headers
+        get route, headers: accept_json_headers
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -16,7 +16,7 @@ RSpec.describe V1::BaseController, type: :request do
       it "should return resource with ok status" do
         get route, headers: auth_headers
         expect(response).to have_http_status(:ok)
-        expect(json_body).not_to be_empty
+        expect(JSON.parse(response.body)).not_to be_empty
       end
     end
   end
