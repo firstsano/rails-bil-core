@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module JsonPattern
-  extend JsonExpressions::JsonSpec
+  extend JsonExpressionsMacros::JsonSpec
 end
 
 RSpec.configure do |config|
