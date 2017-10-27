@@ -17,7 +17,7 @@ module V1
     end
 
     def render_options
-      { include: params[:include].underscore }
+      { include: params[:include]&.underscore }
     end
 
     private
