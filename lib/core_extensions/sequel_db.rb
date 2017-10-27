@@ -23,7 +23,7 @@ module RCore
       end
 
       def params_to_connect(database = nil)
-        yml_config = YAML.load_file(File.expand_path('../../database.yml', __FILE__))
+        yml_config = YAML.load_file File.join(Rails.root, "config", "database.yml")
         env_database = database ? "#{database}_#{Rails.env}" : Rails.env
         yml_config[env_database]
       end
