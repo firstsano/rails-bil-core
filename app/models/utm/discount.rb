@@ -1,7 +1,8 @@
 module Utm
   class Discount < ::Sequel::Model(RCore::SequelDb.utm_db[:discount_transactions_all])
-    include WithinRange
-    include ReadOnlyRecords
+    include ::WithinRange
+    include ::ReadOnlyRecords
+    include ::ActiveModel::Serialization
 
     within_range_attribute :discount_date
 

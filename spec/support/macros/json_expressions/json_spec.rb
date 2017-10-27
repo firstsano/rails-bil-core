@@ -15,28 +15,25 @@ module JsonExpressionsMacros
 
     def relationships(type)
       {
-        data: [
-          relationships: {
-            :"#{type}" => wildcard_matcher
-          }
-        ]
+        relationships: {
+          :"#{type}" => wildcard_matcher
+        }
       }
     end
 
-    def inclusion(type)
+    def inclusion(type, attributes)
       {
         included: [
           {
-            type: type
+            type: type,
+            attributes: require_attributes_presence(attributes)
           }
         ]
       }
     end
 
-    def collection(items:, attributes: nil)
-      resource_attributes = resource attributes
-      collection = Array.new items, resource_attributes
-      { data: collection.strict! }
+    def collection(num, attributes)
+      { data: Array.new(num, attributes) }
     end
   end
 end

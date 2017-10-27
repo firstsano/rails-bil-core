@@ -6,7 +6,7 @@ module V1
     before_action :authenticate_user
 
     def render(resource)
-      super json: serialize_model(resource)
+      super json: resource, **render_options
     end
 
     def prepare_date_range
@@ -16,16 +16,14 @@ module V1
       @date_range = DateTimeRange.generate start: from, stop: to
     end
 
-    def serialize_model(model, options = {})
-      options[:is_collection] = model.respond_to? :each
-      options[:include] = params[:include]
-      JSONAPI::Serializer.safe_serialize(model, options)
+    def render_options
+      { include: params[:include].underscore }
     end
 
     private
 
     def get_filter_params(*attributes)
-      return Array.new(attributes.count) { nil } unless params[:filter]
+      return Array.new(attributes.count, nil) unless params[:filter]
       params[:filter].values_at(*attributes)
     end
   end

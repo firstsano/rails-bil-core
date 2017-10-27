@@ -1,6 +1,7 @@
 module Utm
   class ServiceData < ::Sequel::Model(RCore::SequelDb.utm_db[:services_data])
-    include ReadOnlyRecords
+    include ::ReadOnlyRecords
+    include ::ActiveModel::Serialization
 
     one_to_one :parent, key: :parent_service_id, class: Utm::ServiceData
 
