@@ -7,6 +7,7 @@ module Utm
   class Payment < ::Sequel::Model(setup_table)
     include WithinRange
     include ReadOnlyRecords
+    include ::ActiveModel::Serialization
 
     def_column_alias :payment_method_id, :method
     within_range_attribute :payment_enter_date

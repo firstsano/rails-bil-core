@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../requests_helper'
 
 RSpec.describe V1::TariffsController, type: :request do
   setup_auth

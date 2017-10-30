@@ -1,5 +1,7 @@
-class Utm::PaymentSerializer < BaseSerializer
-  attributes :id, :payment_incurrency
+module Utm
+  class PaymentSerializer <  ::ActiveModel::Serializer
+    attributes :id, :payment_incurrency
 
-  has_one :payment_method
+    belongs_to :payment_method
+  end
 end

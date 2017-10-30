@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../requests_helper'
 
 RSpec.describe V1::ServicesController, type: :request do
   setup_auth
@@ -16,6 +16,6 @@ RSpec.describe V1::ServicesController, type: :request do
 
     it_behaves_like 'basic json API response',
       should_have_items: 5,
-      required_attributes: ["name", "type-of-service", "description", "cost-month", "cost-day"]
+      required_attributes: ["name", "typeOfService", "description", "costMonth", "costDay"]
   end
 end

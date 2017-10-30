@@ -18,7 +18,7 @@ RSpec.describe V1::DiscountsController, type: :request do
       before do
         other_discounts = create_list(:discount, 30)
         discount_range.map(&:to_time).map(&:to_i).each { |d| create :discount, account_id: @user.utm_account_id, discount_date: d }
-        get route, params: { include: "serviceData", filter: { from: from, to: to } }, headers: auth_headers
+        get route, params: { include: "service-data", filter: { from: from, to: to } }, headers: auth_headers
       end
 
       it_behaves_like 'basic json API response',

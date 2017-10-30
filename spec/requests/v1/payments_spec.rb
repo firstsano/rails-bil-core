@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../requests_helper'
 
 RSpec.describe V1::PaymentsController, type: :request do
   setup_auth
@@ -27,9 +27,11 @@ RSpec.describe V1::PaymentsController, type: :request do
 
       it_behaves_like 'basic json API response',
         should_have_items: 5,
-        required_attributes: ["payment-incurrency"]
-      it_behaves_like 'json API response with included', "payment-methods"
-      it_behaves_like 'json API response with relationships', "payment-method"
+        with_relationships: "paymentMethod",
+        required_attributes: ["paymentIncurrency"]
+      it_behaves_like 'json API response with included',
+        type: "paymentMethod",
+        required_attributes: ["name"]
     end
 
     after(:all) { Timecop.return }

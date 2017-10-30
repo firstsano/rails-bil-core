@@ -3,7 +3,7 @@ require_relative '../requests_helper'
 RSpec.describe V1::BaseController, type: :request do
   describe "authorization" do
     setup_auth
-    let(:route) { "/discounts/index" }
+    let(:route) { "/users/show" }
 
     context "when user is not authorized" do
       it "should return not_authorized status" do
