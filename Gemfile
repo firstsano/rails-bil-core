@@ -46,6 +46,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
+  gem 'guard'
   gem 'rubocop', '~> 0.50.0', require: false
   gem 'guard-rubocop'
 
