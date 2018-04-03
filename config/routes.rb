@@ -14,9 +14,10 @@ Rails.application.routes.draw do
       get :show
     end
 
-    namespace :tariffs do
-      get :index
-      get :available
+    resources :tariffs, only: [:index, :create, :destroy, :update] do
+      collection do
+        get :available
+      end
     end
 
     namespace :services do

@@ -5,13 +5,13 @@ RSpec.describe "routes user tariffs information" do
 
   describe "user current tariff detalization" do
     it "should be routable" do
-      expect(get: "/tariffs/index").to be_routable
+      expect(get: "/tariffs").to be_routable
     end
   end
 
   describe "user connect tariff" do
     it "should be routable" do
-      expect(post: "/tariffs/index").to be_routable
+      expect(post: "/tariffs").to be_routable
     end
   end
 
