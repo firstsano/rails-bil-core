@@ -14,11 +14,12 @@ Rails.application.routes.draw do
       get :show
     end
 
-    resources :tariffs, only: [:index, :create, :destroy, :update] do
-      collection do
-        get :available
-      end
+    namespace :tariffs do
+      get :index
+      get :available
     end
+    put 'tariffs/index', to: 'tariffs#connect'
+    delete 'tariffs/index', to: 'tariffs#disconnect'
 
     namespace :services do
       get :index
