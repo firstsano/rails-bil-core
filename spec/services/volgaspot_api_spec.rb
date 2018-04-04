@@ -107,5 +107,16 @@ RSpec.describe VolgaspotApi, type: :module do
       it_behaves_like "sending request to proper routes", { data: true }
       it_behaves_like "rising error on bad responses"
     end
+
+    describe "::link_user_tariff" do
+      let(:method) { :post }
+      let(:tariff_id) { Faker::Number.number(3) }
+      let(:route) { "/users/#{user.id}/link-tariff-now" }
+      let(:send_method) { subject.link_user_tariff user.id, tariff_id }
+
+      it { is_expected.to respond_to(:link_user_tariff) }
+      it_behaves_like "sending request to proper routes", { data: true }
+      it_behaves_like "rising error on bad responses"
+    end
   end
 end
