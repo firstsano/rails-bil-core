@@ -26,4 +26,8 @@ module VolgaspotApi
   def self.use_promised_payment(id)
     VolgaspotApi::Requests::UsePromisedPayment.new(user_id: id).call
   end
+
+  def self.link_user_tariff(user_id, tariff_id)
+    VolgaspotApi::Requests::LinkTariff.new(user_id: user_id, tariff_id: tariff_id).call
+  end
 end

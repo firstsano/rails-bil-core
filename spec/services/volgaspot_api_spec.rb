@@ -117,6 +117,19 @@ RSpec.describe VolgaspotApi, type: :module do
       it { is_expected.to respond_to(:link_user_tariff) }
       it_behaves_like "sending request to proper routes", { data: true }
       it_behaves_like "rising error on bad responses"
+
+      it "should return id of connected tariff" do
+        stub_vs_request vs_response(output: {
+            id: 13678,
+            account_id: 6388,
+            tariff_id: tariff_id,
+            next_tariff_id: tariff_id,
+            discount_period_id: 2019,
+            is_deleted: 0,
+            link_date: 1522147778
+        })
+        expect(send_method).to eq tariff_id
+      end
     end
   end
 end
