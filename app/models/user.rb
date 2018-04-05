@@ -28,20 +28,21 @@ class User
     @utm_account_id ||= remote_data_service.fetch_user_utm_account id
   end
 
-  def utm_account
-    @utm_account ||= Utm::Account[utm_account_id]
+  def utm_account(accounts: Utm::Account)
+    @utm_account ||= accounts[utm_account_id]
   end
 
-  def tariffs
-    Utm::Tariff.where(id: services.select(:tariff_id))
+  def tariffs(tariffs: Utm::Tariff)
+    tariffs.where id: services.select(:tariff_id)
   end
 
-  def services
-    Utm::ServiceData.where(id: service_ids)
+  def services(service_datum: Utm::ServiceData)
+    service_datum.where id: service_ids
   end
 
-  def available_tariffs
-    Utm::Tariff.where(id: remote_data_service.fetch_user_available_tariffs(id))
+  def available_tariffs(tariffs: Utm::Tariff)
+    available_tariffs_ids = remote_data_service.fetch_user_available_tariffs id
+    tariffs.where id: available_tariffs_ids
   end
 
   def service_ids
@@ -54,6 +55,14 @@ class User
 
   def use_promised_payment
     remote_data_service.use_promised_payment id
+  end
+
+  def link_tariff(tariff_id)
+    remote_data_service.link_user_tariff id, tariff_id
+  end
+
+  def unlink_tariff
+    remote_data_service.unlink_user_tariff id
   end
 
   private

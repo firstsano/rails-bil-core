@@ -1,9 +1,9 @@
 module VolgaspotApi
   module Requests
-    class LinkTariff < BaseRequest
-      self.raw_route = "/users/:user_id/link-tariff"
+    class UnlinkTariff < BaseRequest
+      self.raw_route = "/users/:user_id/unlink-tariff"
 
-      def initialize(user_id:, tariff_id:)
+      def initialize(user_id:)
         super
       end
 

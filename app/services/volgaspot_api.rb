@@ -30,4 +30,8 @@ module VolgaspotApi
   def self.link_user_tariff(user_id, tariff_id)
     VolgaspotApi::Requests::LinkTariff.new(user_id: user_id, tariff_id: tariff_id).call
   end
+
+  def self.unlink_user_tariff(user_id)
+    VolgaspotApi::Requests::UnlinkTariff.new(user_id: user_id).call
+  end
 end

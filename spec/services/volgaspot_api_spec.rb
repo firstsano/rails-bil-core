@@ -109,16 +109,16 @@ RSpec.describe VolgaspotApi, type: :module do
     end
 
     describe "::link_user_tariff" do
-      let(:method) { :post }
+      let(:method) { :get }
       let(:tariff_id) { Faker::Number.number(3) }
-      let(:route) { "/users/#{user.id}/link-tariff-now" }
+      let(:route) { "/users/#{user.id}/link-tariff" }
       let(:send_method) { subject.link_user_tariff user.id, tariff_id }
 
       it { is_expected.to respond_to(:link_user_tariff) }
       it_behaves_like "sending request to proper routes", { data: true }
       it_behaves_like "rising error on bad responses"
 
-      it "should return id of connected tariff" do
+      it "should return if response is successful" do
         stub_vs_request vs_response(output: {
             id: 13678,
             account_id: 6388,
@@ -128,7 +128,23 @@ RSpec.describe VolgaspotApi, type: :module do
             is_deleted: 0,
             link_date: 1522147778
         })
-        expect(send_method).to eq tariff_id
+        expect(send_method).to eq true
+      end
+    end
+
+    describe "::unlink_user_tariff" do
+      let(:method) { :get }
+      let(:tariff_id) { Faker::Number.number(3) }
+      let(:route) { "/users/#{user.id}/unlink-tariff" }
+      let(:send_method) { subject.unlink_user_tariff user.id }
+
+      it { is_expected.to respond_to(:unlink_user_tariff) }
+      it_behaves_like "sending request to proper routes", { data: true }
+      it_behaves_like "rising error on bad responses"
+
+      it "should return if response is successful" do
+        stub_vs_request vs_response
+        expect(send_method).to eq true
       end
     end
   end
