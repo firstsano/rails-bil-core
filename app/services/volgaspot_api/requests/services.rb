@@ -8,10 +8,13 @@ module VolgaspotApi
       end
 
       def parse_response
-        @response[:data][:services]
-          .values
-          .index_by { |service| service[:service_id] }
-          .keys
+        response = @response[:data][:services]
+        unless response.empty?
+          response = response.values
+                             .index_by { |service| service[:service_id] }
+                             .keys
+        end
+        response
       end
     end
   end
