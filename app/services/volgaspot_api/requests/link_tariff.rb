@@ -7,6 +7,10 @@ module VolgaspotApi
         super
       end
 
+      def send_request
+        @response = self.class.put route(@request_params), body: @request_params
+      end
+
       def parse_response
         @response[:success]
       end
